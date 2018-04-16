@@ -65,6 +65,8 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "better-scroll": "^1.9.1",
     "classnames": "^2.2.5",
     "prop-types": "^15.6.1",
     "react": "^16.3.1",

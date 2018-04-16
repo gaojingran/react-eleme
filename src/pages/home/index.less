@@ -1,5 +1,35 @@
 
+
 .root {
-  color: #666;
-  font-size: 24px;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .btn {
+    width: 600px;
+    height: 80px;
+    text-align: center;
+    background-color: violet;
+    color: #fff;
+    line-height: 80px;
+    font-size: 32px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+
+  .scroll-wrapper {
+    width: 100%;
+    position: relative;
+    height: 500px;
+    background-color: #f5f5f9;
+    .item {
+      margin-bottom: 8px;
+      height: 40px;
+      font-size: 24px;
+      text-align: center;
+      color: #666;
+      background-color: #ddd
+    }
+  }
 }
