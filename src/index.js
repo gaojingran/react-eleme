@@ -2,8 +2,10 @@
 /*eslint-disable*/
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
 import { AppContainer } from 'react-hot-loader'
+import store from './stores'
 import App from './pages'
 
 // requires and returns all modules that match
@@ -15,9 +17,11 @@ requireAll(reqSvg)
 const render = Component => (
   ReactDOM.render((
     <AppContainer>
-      <BrowserRouter>
-        <Component />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Component />
+        </BrowserRouter>
+      </Provider>
     </AppContainer>
   ), document.getElementById('root'))
 )

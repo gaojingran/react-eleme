@@ -17,7 +17,13 @@ const devServer = {
     errors: true
   },
   publicPath: '/',
-  proxy: {}
+  proxy: {
+    '/api': {
+      target: 'http://localhost:3000',
+      pathRewrite: {'^/api' : ''},
+      changeOrigin: true
+    }
+  }
 }
 const defaultPlugins = [
   new webpack.DefinePlugin({
@@ -28,7 +34,7 @@ const defaultPlugins = [
   new HtmlWebpackPlugin({
     hash: true,
     filename: 'index.html',
-    template: path.join(__dirname, '../src/index.html')
+    template: path.resolve(__dirname, '../src/index.html')
   })
 ]
 
@@ -41,7 +47,7 @@ if (isDev) {
     entry: {
       index: [
         'react-hot-loader/patch',
-        path.join(__dirname, '../src/index.js')
+        path.resolve(__dirname, '../src/index.js')
       ]
     },
     module: {
@@ -66,7 +72,7 @@ if (isDev) {
   config = merge(baseConfig, {
     mode: 'production',
     entry: {
-      index: path.join(__dirname, '../src/index.js')
+      index: path.resolve(__dirname, '../src/index.js')
     },
     optimization: {
       minimize: true,

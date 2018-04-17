@@ -6,15 +6,17 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = {
   output: {
     filename: '[name].[hash:8].js',
-    path: path.join(__dirname, '../dist'),
+    path: path.resolve(__dirname, '../dist'),
     publicPath: '/'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      'src': path.join(__dirname, '../src'),
-      'assets': path.join(__dirname, '../src/assets'),
-      'components': path.join(__dirname, '../src/components')
+      'src': path.resolve(__dirname, '../src'),
+      'utils': path.resolve(__dirname, '../src/utils'),
+      'stores': path.resolve(__dirname, '../src/stores'),
+      'assets': path.resolve(__dirname, '../src/assets'),
+      'components': path.resolve(__dirname, '../src/components')
     }
   },
   module: {
@@ -28,12 +30,12 @@ module.exports = {
       {
         test: /\.jsx?$/,
         use: 'happypack/loader?id=js',
-        include: path.join(__dirname, '../src')
+        include: path.resolve(__dirname, '../src')
       },
       {
         test: /\.svg$/,
         loader: 'svg-sprite-loader',
-        include: path.join(__dirname, '../src/assets/svg'),
+        include: path.resolve(__dirname, '../src/assets/svg'),
         options: {
           name: '[name]',
           prefixize: true
@@ -42,7 +44,7 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
-        exclude: path.join(__dirname, '../src/assets/svg'),
+        exclude: path.resolve(__dirname, '../src/assets/svg'),
         options: {
           name: 'static/[name].[ext]?[hash:8]'
         }
@@ -57,8 +59,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: path.join(__dirname, '../static'),
-        to: path.join(__dirname, '../dist/static')
+        from: path.resolve(__dirname, '../static'),
+        to: path.resolve(__dirname, '../dist/static')
       }
     ])
   ]
