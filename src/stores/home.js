@@ -24,6 +24,18 @@ export const home = (state = initState, action) => {
   }
 }
 
+export const sss = () => {
+  return {
+    type: INCREMENT,
+  }
+}
+
+export const aaa = () => {
+  return {
+    type: DECREAMENT,
+  }
+}
+
 export const increment = () => {
   return dispatch => dispatch({
     type: INCREMENT,
