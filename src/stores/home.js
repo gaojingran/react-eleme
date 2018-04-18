@@ -1,49 +1,55 @@
 
+import omit from 'lodash.omit'
+import Toast from 'components/toast'
+import { getGeolocation, getEntry, getBanner } from '../api'
 
-const INCREMENT = 'HOME_INCREMENT'
-const DECREAMENT = 'HOME_DECREAMENT'
+const UPDATE = 'HOME_UPDATE'
 
 const initState = {
-  count: 0,
+  init: false,
+  topBarShrink: false,
+  locationInfo: {},
+  banner: [],
+  entry: [],
+  list: [],
 }
 
 export const home = (state = initState, action) => {
   switch (action.type) {
-    case INCREMENT:
+    case UPDATE:
       return {
         ...state,
-        count: state.count + 1,
-      }
-    case DECREAMENT:
-      return {
-        ...state,
-        count: state.count - 1,
+        ...action.payload,
       }
     default:
       return state
   }
 }
 
-export const sss = () => {
+export const homeUpdate = (params) => {
   return {
-    type: INCREMENT,
+    payload: params,
+    type: UPDATE,
   }
 }
 
-export const aaa = () => {
-  return {
-    type: DECREAMENT,
+export const homeInit = () => {
+  return async (dispatch, getState) => {
+    const { init } = getState().home
+    if (init) return
+    try {
+      // 定理位置
+      const geoInfo = await getGeolocation()
+      dispatch(homeUpdate({ locationInfo: geoInfo.data }))
+      const location = { ...omit(geoInfo.data, ['address']) }
+      // 获取banner entry
+      const [banner, entry] = await Promise.all([
+        getBanner(location),
+        getEntry(location),
+      ])
+      dispatch(homeUpdate({ banner: banner.data, entry: entry.data, init: true }))
+    } catch ({ err }) {
+      Toast.info(err, 3, false)
+    }
   }
-}
-
-export const increment = () => {
-  return dispatch => dispatch({
-    type: INCREMENT,
-  })
-}
-
-export const decrement = () => {
-  return dispatch => dispatch({
-    type: DECREAMENT,
-  })
 }

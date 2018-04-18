@@ -2,6 +2,7 @@
 /* eslint-disable */
 import React from 'react'
 import PropTypes from 'prop-types'
+import cls from 'classnames'
 import BScroll from 'better-scroll'
 import Loading from '../loading'
 import Bubble from './bubble'
@@ -31,6 +32,8 @@ export default class Scroll extends React.Component {
    *  beforeScrollStart function -> 滚动开始回调
    */
   static proptypes = {
+    style: PropTypes.object,
+    className: PropTypes.string,
     dataSource: PropTypes.array,
     probeType: PropTypes.oneOf([1, 2, 3]),
     click: PropTypes.bool,
@@ -292,7 +295,10 @@ export default class Scroll extends React.Component {
     }
 
     return (
-      <div className={styles['list-wrapper']} ref={c => this.wrapper = c}>
+      <div
+        className={cls(styles['list-wrapper'], this.props.className)}
+        style={this.props.style}
+        ref={c => this.wrapper = c}>
         {/* 滚动部分 */}
         <div className={styles['scroll-content']} ref={c => this.scrollContent = c}>
           {/* 列表部分 */}

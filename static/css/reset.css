@@ -133,7 +133,7 @@
  /* custom */
 
  a {
-   color: #787878;
+   color: #818181;
    text-decoration: none;
    -webkit-backface-visibility: hidden;
  }
@@ -141,7 +141,7 @@
  html,
  body {
    width: 100%;
-   color: #787878;
+   color: #818181;
    background-color: #f4f4f4;
    font-weight: 200;
    font-family: 'PingFang SC', 'STHeitiSC-Light', 'Arial, Helvetica, sans-serif';

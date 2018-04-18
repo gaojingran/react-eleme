@@ -1,47 +1,95 @@
 
 import React from 'react'
-import { bindActionCreators } from 'redux'
+import ReactDom from 'react-dom'
 import { connect } from 'react-redux'
-import Toast from 'components/toast'
-import { increment, decrement, sss, aaa } from 'stores/home'
-import { getEntry } from '../../api'
+import { bindActionCreators } from 'redux'
+import Slide from 'components/slide'
+import Scroll from 'components/scroll'
+import { homeUpdate, homeInit } from '../../stores/home'
+import withTabBar from '../common-components/tab-bar'
+import TitleBar from '../common-components/title-bar'
+import TopBar from './top-bar'
 import styles from './index.less'
 
 const mapStateToProps = ({ home }) => ({
-  count: home.count,
+  init: home.init,
+  banner: home.banner,
+  entry: home.entry,
 })
+const mapActionsToProps = dispatch => bindActionCreators({
+  homeUpdate,
+  homeInit,
+}, dispatch)
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    increment,
-    decrement,
-    sss,
-    aaa,
-  }, dispatch)
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(
+  mapStateToProps,
+  mapActionsToProps,
+)
+@withTabBar
 export default class Home extends React.Component {
-  componentDidMount() {
-    this.initPage()
-    console.log(this.props)
+  constructor(props) {
+    super(props)
+    this.state = {
+      topBarHeight: 0,
+    }
   }
 
-  initPage = async () => {
-    try {
-      const { data } = await getEntry()
-      console.log(data)
-    } catch ({ err }) {
-      Toast.info(err, 3)
+  componentDidMount() {
+    this.props.homeInit()
+  }
+
+  getTopBarHeight = (topBar) => {
+    if (topBar) {
+      this.setState({
+        topBarHeight: ReactDom.findDOMNode(topBar).clientHeight,
+      })
+    }
+  }
+
+  imgLoaded = () => {
+    if (this.scroll && !this.loadImg) {
+      this.loadImg = true
+      this.scroll.refresh()
     }
   }
 
   render() {
+    const { topBarHeight } = this.state
+    const { banner, entry, init } = this.props
+    const scrollProps = {
+      className: styles.scroll,
+      style: { top: topBarHeight },
+    }
+
     return (
       <div className={styles.root}>
-        <div>{this.props.count}</div>
-        <button onClick={() => this.props.sss()}>increment</button>
-        <button onClick={() => this.props.aaa()}>decrement</button>
+        <TopBar ref={this.getTopBarHeight} />
+        {
+          init ? (
+            <Scroll {...scrollProps} ref={c => this.scroll = c}>
+              <Slide>
+                {
+                  banner.map(v => (
+                    <img key={v.id} src={v.image_url} alt="" />
+                  ))
+                }
+              </Slide>
+              <div className={styles['entry-wrapper']}>
+                {
+                  entry.slice(0, 10).map(v => (
+                    <div className={styles.item} key={v.id}>
+                      <div className={styles.img}>
+                        <img alt="" src={v.image_url} />
+                      </div>
+                      <p className={styles.name}>{v.name}</p>
+                    </div>
+                  ))
+                }
+              </div>
+              <TitleBar title="推荐商家" />
+            </Scroll>
+          ) : null
+        }
       </div>
     )
   }
