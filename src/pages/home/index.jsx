@@ -8,6 +8,7 @@ import Scroll from 'components/scroll'
 import { homeUpdate, homeInit } from '../../stores/home'
 import withTabBar from '../common-components/tab-bar'
 import TitleBar from '../common-components/title-bar'
+import ShopListRow from '../common-components/shop-list-row'
 import TopBar from './top-bar'
 import styles from './index.less'
 
@@ -15,6 +16,7 @@ const mapStateToProps = ({ home }) => ({
   init: home.init,
   banner: home.banner,
   entry: home.entry,
+  shoplist: home.shoplist,
 })
 const mapActionsToProps = dispatch => bindActionCreators({
   homeUpdate,
@@ -55,12 +57,17 @@ export default class Home extends React.Component {
 
   render() {
     const { topBarHeight } = this.state
-    const { banner, entry, init } = this.props
+    const {
+      banner,
+      entry,
+      shoplist,
+      init,
+    } = this.props
     const scrollProps = {
       className: styles.scroll,
       style: { top: topBarHeight },
     }
-
+    console.log(this.props.shoplist)
     return (
       <div className={styles.root}>
         <TopBar ref={this.getTopBarHeight} />
@@ -87,6 +94,11 @@ export default class Home extends React.Component {
                 }
               </div>
               <TitleBar title="推荐商家" />
+              {
+                shoplist.map(shop => (
+                  <ShopListRow key={shop.restaurant.id} data={shop.restaurant} />
+                ))
+              }
             </Scroll>
           ) : null
         }

@@ -1,7 +1,7 @@
 
 import omit from 'lodash.omit'
 import Toast from 'components/toast'
-import { getGeolocation, getEntry, getBanner } from '../api'
+import { getGeolocation, getEntry, getBanner, getShopList } from '../api'
 
 const UPDATE = 'HOME_UPDATE'
 
@@ -11,7 +11,8 @@ const initState = {
   locationInfo: {},
   banner: [],
   entry: [],
-  list: [],
+  shoplist: [],
+  rank_id: undefined,
 }
 
 export const home = (state = initState, action) => {
@@ -43,11 +44,26 @@ export const homeInit = () => {
       dispatch(homeUpdate({ locationInfo: geoInfo.data }))
       const location = { ...omit(geoInfo.data, ['address']) }
       // 获取banner entry
-      const [banner, entry] = await Promise.all([
+      const [banner, entry, shoplist] = await Promise.all([
         getBanner(location),
         getEntry(location),
+        getShopList({
+          ...location,
+          terminal: 'h5',
+          offset: 0,
+          limit: 8,
+          extra_filters: 'home',
+          extras: ['activities', 'tags'],
+          rank_id: '',
+        }),
       ])
-      dispatch(homeUpdate({ banner: banner.data, entry: entry.data, init: true }))
+      dispatch(homeUpdate({
+        banner: banner.data,
+        entry: entry.data,
+        shoplist: shoplist.data.items,
+        rank_id: shoplist.data.rank_id,
+        init: true,
+      }))
     } catch ({ err }) {
       Toast.info(err, 3, false)
     }

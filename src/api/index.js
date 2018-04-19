@@ -21,7 +21,7 @@ export const getGeolocation = () => {
         })
       } else {
         reject({
-          err: '定位失败',
+          err: result.message,
         })
       }
     })
@@ -29,3 +29,4 @@ export const getGeolocation = () => {
 }
 export const getEntry = (params) => { return HttpUtils.get('/elm/entry', params) };
 export const getBanner = (params) => { return HttpUtils.get('/elm/banner', params) };
+export const getShopList = (params) => { return HttpUtils.get('/elm/restaurants', params) };

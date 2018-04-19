@@ -69,6 +69,7 @@
     "better-scroll": "^1.9.1",
     "classnames": "^2.2.5",
     "lodash.omit": "^4.5.0",
+    "numeral": "^2.0.6",
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
