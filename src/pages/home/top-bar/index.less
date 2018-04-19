@@ -13,10 +13,12 @@
   width: 100%;
   padding: 0 28px;
   background-image: linear-gradient(-90deg, @primary-color, @primary-color-light);
+  transition: all .3s ease;
   .location {
     width: 100%;
     height: @bar-height;
     font-size: 0;
+    transition: all .3s ease;
     .icon {
       display: inline-block;
       vertical-align: middle;
@@ -29,8 +31,7 @@
       display: inline-block;
       vertical-align: middle;
       font-size: @font-size-medium-x;
-      height: 100%;
-      line-height: 3.3em;
+      margin-top: 2px;
       color: #fff;
       max-width: 330px;
       margin-right: 16px;
@@ -44,7 +45,6 @@
       fill: #fff;
     }
   }
-
   .search {
     width: 100%;
     height: @search-height;
@@ -53,6 +53,7 @@
     background-color: @fill-body;
     font-size: 0;
     text-align: center;
+    transition: all .3s ease;
     .icon {
       display: inline-block;
       vertical-align: middle;
@@ -67,6 +68,17 @@
       font-size: @font-size-medium;
       color: @color-base;
       font-weight: @font-weight-small;
+    }
+  }
+
+  &.shrink {
+    .location {
+      height: 0;
+      opacity: 0;
+    }
+    .search {
+      margin-top: (@bar-height - @search-height) / 2;
+      border-radius: @bar-height;
     }
   }
 }

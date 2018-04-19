@@ -55,6 +55,15 @@ export default class Home extends React.Component {
     }
   }
 
+  scrolling = ({ y }) => {
+    const { topBarHeight } = this.state
+    let topBarShrink = false
+    if (y < -topBarHeight) {
+      topBarShrink = true
+    }
+    this.props.homeUpdate({ topBarShrink })
+  }
+
   render() {
     const { topBarHeight } = this.state
     const {
@@ -65,9 +74,12 @@ export default class Home extends React.Component {
     } = this.props
     const scrollProps = {
       className: styles.scroll,
+      dataSource: shoplist,
+      probeType: 3,
+      listenScroll: true,
+      scroll: pos => this.scrolling(pos),
       style: { top: topBarHeight },
     }
-    console.log(this.props.shoplist)
     return (
       <div className={styles.root}>
         <TopBar ref={this.getTopBarHeight} />

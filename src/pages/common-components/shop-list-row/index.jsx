@@ -52,7 +52,9 @@ export default class ShopListRow extends React.PureComponent {
             {
               data.recommend.color && data.recommend.image_url ? (
                 <div className={styles.koubei}>
-                  <img src={data.recommend.image_url} alt="" />
+                  <div className={styles.img}>
+                    <img src={data.recommend.image_url} />
+                  </div>
                   <span style={{ color: data.recommend.color }}>{data.recommend.reason}</span>
                 </div>
               ) : null
