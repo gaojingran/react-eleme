@@ -18,8 +18,8 @@ export default class Loading extends React.Component {
     super(props)
     this.ratio = window.devicePixelRatio
     this.state = {
-      width: 24 * this.ratio,
-      height: 24 * this.ratio,
+      width: 14 * this.ratio,
+      height: 14 * this.ratio,
     }
   }
 
@@ -33,7 +33,7 @@ export default class Loading extends React.Component {
           width={width}
           height={height}
           style={{ width: width / this.ratio, height: height / this.ratio }} />
-        <p className={styles.desc}>loading...</p>
+        <p className={styles.desc}>正在加载...</p>
       </div>
     )
   }

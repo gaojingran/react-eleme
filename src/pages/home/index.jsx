@@ -5,10 +5,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Slide from 'components/slide'
 import Scroll from 'components/scroll'
-import { homeUpdate, homeInit } from '../../stores/home'
+import { homeUpdate, homeInit, homeList } from '../../stores/home'
 import withTabBar from '../common-components/tab-bar'
 import TitleBar from '../common-components/title-bar'
 import ShopListRow from '../common-components/shop-list-row'
+import Skeleton from './skeleton-screen'
 import TopBar from './top-bar'
 import styles from './index.less'
 
@@ -21,6 +22,7 @@ const mapStateToProps = ({ home }) => ({
 const mapActionsToProps = dispatch => bindActionCreators({
   homeUpdate,
   homeInit,
+  homeList,
 }, dispatch)
 
 @connect(
@@ -68,6 +70,10 @@ export default class Home extends React.Component {
     this.scroll && this.scroll.refresh()    // eslint-disable-line
   }
 
+  handlePullUp = () => {
+    this.props.homeList(() => this.scroll && this.scroll.forceUpdate())
+  }
+
   render() {
     const { topBarHeight } = this.state
     const {
@@ -83,7 +89,10 @@ export default class Home extends React.Component {
       listenScroll: true,
       scroll: pos => this.scrolling(pos),
       style: { top: topBarHeight },
+      pullUpLoad: true,
+      pullingUp: this.handlePullUp,
     }
+
     return (
       <div className={styles.root}>
         <TopBar ref={this.getTopBarHeight} />
@@ -111,15 +120,15 @@ export default class Home extends React.Component {
               </div>
               <TitleBar title="推荐商家" />
               {
-                shoplist.map(shop => (
+                shoplist.map((shop, i) => (
                   <ShopListRow
-                    key={shop.restaurant.id}
-                    data={shop.restaurant}
+                    key={`${shop.id}--${i}--${new Date().getTime()}`}
+                    data={shop}
                     refresh={this.refreshScroll} />
                 ))
               }
             </Scroll>
-          ) : null
+          ) : <Skeleton style={{ paddingTop: topBarHeight }} />
         }
       </div>
     )

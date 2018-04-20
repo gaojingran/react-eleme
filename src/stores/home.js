@@ -61,9 +61,34 @@ export const homeInit = () => {
         banner: banner.data,
         entry: entry.data,
         shoplist: shoplist.data.items,
-        rank_id: shoplist.data.rank_id,
+        rank_id: shoplist.data.meta.rank_id,
         init: true,
       }))
+    } catch ({ err }) {
+      Toast.info(err, 3, false)
+    }
+  }
+}
+
+export const homeList = (callback) => {
+  return async (dispatch, getState) => {
+    const { rank_id, locationInfo, shoplist } = getState().home         // eslint-disable-line
+    const location = { ...omit(locationInfo, ['address']) }
+    try {
+      const list = await getShopList({
+        ...location,
+        rank_id: rank_id,           // eslint-disable-line
+        terminal: 'h5',
+        offset: shoplist.length,
+        limit: 8,
+        extra_filters: 'home',
+        extras: ['activities', 'tags'],
+      })
+      dispatch(homeUpdate({
+        shoplist: [...shoplist, ...list.data.items],
+        rank_id: list.data.meta.rank_id,
+      }))
+      callback && callback()       // eslint-disable-line
     } catch ({ err }) {
       Toast.info(err, 3, false)
     }
