@@ -64,6 +64,10 @@ export default class Home extends React.Component {
     this.props.homeUpdate({ topBarShrink })
   }
 
+  refreshScroll = () => {
+    this.scroll && this.scroll.refresh()    // eslint-disable-line
+  }
+
   render() {
     const { topBarHeight } = this.state
     const {
@@ -108,7 +112,10 @@ export default class Home extends React.Component {
               <TitleBar title="推荐商家" />
               {
                 shoplist.map(shop => (
-                  <ShopListRow key={shop.restaurant.id} data={shop.restaurant} />
+                  <ShopListRow
+                    key={shop.restaurant.id}
+                    data={shop.restaurant}
+                    refresh={this.refreshScroll} />
                 ))
               }
             </Scroll>

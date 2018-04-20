@@ -1,15 +1,38 @@
 
 
 import React from 'react'
+import cls from 'classnames'
 import numeral from 'numeral'
 import Rate from 'components/rate'
+import SvgIcon from 'components/icon-svg'
 import Badge from '../badge'
 import styles from './index.less'
 
 export default class ShopListRow extends React.PureComponent {
+  state = {
+    showAll: false,
+  }
+
+  showAll = () => {
+    // 刷新 betterscroll
+    const { refresh } = this.props
+    this.setState({
+      showAll: !this.state.showAll,
+    }, () => {
+      refresh && refresh()     // eslint-disable-line
+    })
+  }
+
   render() {
+    const { showAll } = this.state
     const { data } = this.props
-    console.log(data)
+    const activities = data.activities || []
+
+    const arrowCls = cls({
+      [styles.down]: true,
+      [styles.active]: showAll,
+    })
+
     return (
       <div className={styles['shop-row']}>
         <div className={styles['info-wrapper']}>
@@ -60,10 +83,37 @@ export default class ShopListRow extends React.PureComponent {
               ) : null
             }
             <span className={`${styles['dash-line']} hairline-h`} />
-          </div>
 
-          <span className={`${styles['bottom-line']} hairline-h`} />
+            <div className={styles.activities}>
+              <div className={styles['item-wrapper']}>
+                {
+                  activities.map((v, i) => (
+                    <div
+                      className={styles.item}
+                      key={v.id}
+                      style={{ display: i > 1 && !showAll ? 'none' : 'flex' }}>
+                      <Badge
+                        className={styles.icon}
+                        text={v.icon_name}
+                        style={{ backgroundColor: `#${v.icon_color}` }} />
+                      <span className={styles.tips}>{v.tips}</span>
+                    </div>
+                  ))
+                }
+              </div>
+              {
+                activities.length > 2 ? (
+                  <div className={styles['active-wrapper']} onClick={this.showAll}>
+                    <span className={styles.text}>{activities.length}个活动</span>
+                    <SvgIcon className={arrowCls} name="#triangle_down_fill" />
+                  </div>
+                ) : null
+              }
+            </div>
+
+          </div>
         </div>
+        <span className={`${styles['bottom-line']} hairline-h`} />
       </div>
     )
   }
