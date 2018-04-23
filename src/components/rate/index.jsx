@@ -57,7 +57,14 @@ export default class Rate extends React.Component {
     if (!this.props.animate) {
       this.setStyle()
     }
-    setTimeout(() => this.setStyle(), 60)
+    this.timer = setTimeout(() => this.setStyle(), 60)
+  }
+
+  componentWillUnmount() {
+    if (this.timer) {
+      clearTimeout(this.timer)
+      this.timer = null
+    }
   }
 
   setStyle = () => {
