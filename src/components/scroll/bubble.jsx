@@ -109,10 +109,10 @@ export default class Bubble extends React.Component {
     ctx.quadraticCurveTo(controlPointR.x, controlPointR.y, headPointR.x, headPointR.y)
     ctx.shadowBlur = 10
     ctx.shadowOffsetY = 4
-    ctx.shadowColor = 'rgba(0,0,0,.3)'
-    ctx.fillStyle = 'rgb(170,170,170)'
+    ctx.shadowColor = 'rgba(0,170,255,.3)'
+    ctx.fillStyle = 'rgb(0,170,255)'
     ctx.fill()
-    ctx.strokeStyle = 'rgb(153,153,153)'
+    ctx.strokeStyle = 'rgb(0,170,255)'
     ctx.stroke()
     ctx.restore()
   }
@@ -132,7 +132,7 @@ export default class Bubble extends React.Component {
     ctx.lineTo(this.headCenter.x, this.headCenter.y - arrowRadius + this.arrowWidth * 3 / 2 - rate)
     ctx.fillStyle = 'rgb(255,255,255)'
     ctx.fill()
-    ctx.strokeStyle = 'rgb(170,170,170)'
+    ctx.strokeStyle = 'rgb(255,255,255)'
     ctx.stroke()
     ctx.restore()
   }

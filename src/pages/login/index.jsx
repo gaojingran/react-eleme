@@ -3,9 +3,15 @@
 import React from 'react'
 import SvgIcon from 'components/icon-svg'
 import Toast from 'components/toast'
-import { mobileSendCode, loginByMobile } from '../../api'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { globalUpdate } from 'stores/global'
+import { mobileSendCode, loginByMobile, getUserInfo } from '../../api'
 import styles from './index.less'
 
+@connect(() => ({}), dispatch => bindActionCreators({
+  globalUpdate,
+}, dispatch))
 export default class Login extends React.Component {
   state = {
     phone: '',
@@ -37,17 +43,26 @@ export default class Login extends React.Component {
     try {
       Toast.loading('登录中...', 0)
       /* eslint-disable */
-      const { data } = await loginByMobile({
+      const login = await loginByMobile({
         'mobile': phone,
         'validate_code': code,
         'validate_token': this.validate_token,
       })
+      const { data } = await getUserInfo()
       Toast.hide()
       /* eslint-enable */
       if (data) {
+        this.props.globalUpdate({
+          isLogin: true,
+          userInfo: data,
+        })
         this.props.history.goBack()
       }
     } catch ({ err }) {
+      this.props.globalUpdate({
+        isLogin: false,
+        userInfo: {},
+      })
       Toast.info(err)
     }
   }

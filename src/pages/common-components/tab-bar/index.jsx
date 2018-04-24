@@ -29,7 +29,7 @@ export default (Component) => {
               <SvgIcon className={styles.icon} name="#compass" />
               <h1 className={styles.text}>发现</h1>
             </div>
-            <div className={itemCls('/order')}>
+            <div className={itemCls('/order')} onClick={() => handleClick('/order')}>
               <SvgIcon className={styles.icon} name="#form" />
               <h1 className={styles.text}>订单</h1>
             </div>

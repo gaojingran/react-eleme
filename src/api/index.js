@@ -30,6 +30,7 @@ export const getGeolocation = () => {
 export const getEntry = (params) => { return HttpUtils.get('/elm/entry', params) }
 export const getBanner = (params) => { return HttpUtils.get('/elm/banner', params) }
 export const getShopList = (params) => { return HttpUtils.get('/elm/restaurants', params) }
+export const getOrderList = (params) => { return HttpUtils.get('/elm/orders', params) }
 
 export const mobileSendCode = (params) => { return HttpUtils.post('/elm/mobile_send_code', params) }
 export const loginByMobile = (params) => { return HttpUtils.post('/elm/login_by_mobile', params) }
