@@ -33,8 +33,8 @@ export const fetchOrderList = (isRefresh, callback) => {
     const { orderList } = getState().order
     try {
       const { data } = await getOrderList({
-        limit: isRefresh ? 0 : orderList.length - 1,
-        offset: 8,
+        limit: 8,
+        offset: isRefresh ? 0 : orderList.length,
       })
       dispatch(orderUpdate({
         init: true,

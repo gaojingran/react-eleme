@@ -10,6 +10,7 @@ import NabBar from '../common-components/nav-bar'
 import withTabBar from '../common-components/tab-bar'
 import OrderRow from '../common-components/order-list-row'
 import AuthErr from '../common-components/auth-err'
+import RowSk from '../common-components/skeleton/row'
 import styles from './index.less'
 
 const mapStateToProps = ({ globalState, order }) => ({
@@ -67,7 +68,7 @@ export default class Order extends React.PureComponent {
 
   render() {
     const { topBarHeight } = this.state
-    const { orderList, isLogin } = this.props
+    const { orderList, isLogin, init } = this.props
     const scrollProps = {
       className: styles.scroll,
       dataSource: orderList,
@@ -90,8 +91,10 @@ export default class Order extends React.PureComponent {
           isLogin ? (
             <Scroll {...scrollProps} ref={c => this.scroll = c}>
               {
-                orderList.map(v => (
+                init ? orderList.map(v => (
                   <OrderRow key={v.id} data={v} />
+                )) : Array.from({ length: 10 }, (v, i) => i).map(v => (
+                  <RowSk key={v} style={{ backgroundColor: '#fff', marginBottom: 10 }} />
                 ))
               }
             </Scroll>
