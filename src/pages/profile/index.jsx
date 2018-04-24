@@ -2,18 +2,27 @@
 
 import React from 'react'
 import SvgIcon from 'components/icon-svg'
+import { connect } from 'react-redux'
+import { formatPhone } from 'utils/utils'
 import NabBar from '../common-components/nav-bar'
 import withTabBar from '../common-components/tab-bar'
 import styles from './index.less'
 
+@connect(({ globalState }) => ({
+  isLogin: globalState.isLogin,
+  userInfo: globalState.userInfo,
+}))
 @withTabBar
 export default class Profile extends React.Component {
   render() {
-    const { history } = this.props;
+    const { history, userInfo, isLogin } = this.props
+    const { username, mobile } = userInfo
     const goLogin = () => {
       history.push('/login')
     }
-
+    const goDetail = () => {
+      console.log('123123')
+    }
     return (
       <div className={styles.root}>
         <NabBar
@@ -21,15 +30,23 @@ export default class Profile extends React.Component {
           iconLeft="#back"
           leftClick={() => this.props.history.goBack()} />
 
-        <div className={styles['profile-info']}>
+        <div className={styles['profile-info']} onClick={!isLogin ? goLogin : goDetail}>
           <div className={styles.avatar}>
             <SvgIcon name="#avatar" className={styles.icon} />
           </div>
           <div className={styles.desc}>
-            <p className={styles.info} onClick={goLogin}>登陆/注册</p>
+            <p className={styles.info}>
+              {
+                !isLogin ? '登陆/注册' : username
+              }
+            </p>
             <p className={styles.text}>
               <SvgIcon name="#iphone" className={styles.icon} />
-              <span>登陆后享受更多特权</span>
+              <span>
+                {
+                  !isLogin ? '登陆后享受更多特权' : formatPhone(mobile)
+                }
+              </span>
             </p>
           </div>
           <SvgIcon name="#right" className={styles['icon-right']} />

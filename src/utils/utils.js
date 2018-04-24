@@ -20,3 +20,8 @@ export const unique = (array, key) => {
   }
   return result
 }
+
+
+export const formatPhone = (phone) => {
+  return phone.substr(0, 3) + '****' + phone.substr(7, 11);
+}

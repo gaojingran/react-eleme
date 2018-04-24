@@ -35,13 +35,18 @@ export default class Login extends React.Component {
       return Toast.info('请填写手机号验证码')
     }
     try {
+      Toast.loading('登录中...', 0)
       /* eslint-disable */
       const { data } = await loginByMobile({
         'mobile': phone,
         'validate_code': code,
         'validate_token': this.validate_token,
       })
-      console.log(result)
+      Toast.hide()
+      /* eslint-enable */
+      if (data) {
+        this.props.history.goBack()
+      }
     } catch ({ err }) {
       Toast.info(err)
     }
