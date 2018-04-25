@@ -17,6 +17,7 @@ const mapStateToProps = ({ home }) => ({
   init: home.init,
   banner: home.banner,
   entry: home.entry,
+  locationInfo: home.locationInfo,
   shoplist: home.shoplist,
 })
 const mapActionsToProps = dispatch => bindActionCreators({
@@ -74,6 +75,16 @@ export default class Home extends React.Component {
     this.props.homeList(() => this.scroll && this.scroll.forceUpdate())
   }
 
+  handleRowClick = (val) => {
+    const { history, locationInfo } = this.props
+    const { id } = val
+    const { latitude, longitude } = locationInfo
+    history.push({
+      pathname: '/shop',
+      search: `?restaurant_id=${id}&latitude=${latitude}&longitude=${longitude}`,
+    })
+  }
+
   render() {
     const { topBarHeight } = this.state
     const {
@@ -122,6 +133,7 @@ export default class Home extends React.Component {
               {
                 shoplist.map((shop, i) => (
                   <ShopListRow
+                    handleClick={() => this.handleRowClick(shop)}
                     key={`${shop.id}--${i}--${new Date().getTime()}`}
                     data={shop}
                     refresh={this.refreshScroll} />

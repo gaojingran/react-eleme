@@ -8,6 +8,7 @@
   },
   "rules": {
     "semi": [0],
+    "camelcase": [0],
     "no-plusplus": [0],
     "consistent-return": [0],
     "arrow-body-style": [0],

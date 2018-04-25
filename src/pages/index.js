@@ -5,8 +5,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import asyncLoad from 'components/async-loade'
+import science from 'assets/img/science.svg'
 import { getUserInfo } from '../api'
 import { globalUpdate } from '../stores/global'
+import styles from './index.less'
 
 @connect(() => ({}), dispatch => bindActionCreators({
   globalUpdate,
@@ -32,15 +34,24 @@ class AuthComponent extends React.Component {
   }
 }
 
+const Loading = () => (
+  <div className={styles.loading}>
+    <div className={styles.icon}>
+      <img src={science} />
+    </div>
+  </div>
+)
+
 export default () => (
   <React.Fragment>
     <AuthComponent />
     <Switch>
       <Route exact path="/" render={() => <Redirect to="/home" />} />
-      <Route path="/home" component={asyncLoad(() => import('./home'))} />
-      <Route path="/order" component={asyncLoad(() => import('./order'))} />
-      <Route path="/profile" component={asyncLoad(() => import('./profile'))} />
-      <Route path="/login" component={asyncLoad(() => import('./login'))} />
+      <Route path="/home" component={asyncLoad(() => import('./home'), <Loading />)} />
+      <Route path="/order" component={asyncLoad(() => import('./order'), <Loading />)} />
+      <Route path="/profile" component={asyncLoad(() => import('./profile'), <Loading />)} />
+      <Route path="/login" component={asyncLoad(() => import('./login'), <Loading />)} />
+      <Route path="/shop" component={asyncLoad(() => import('./shop'), <Loading />)} />
     </Switch>
   </React.Fragment>
 )

@@ -13,7 +13,8 @@ export default class ShopListRow extends React.PureComponent {
     showAll: false,
   }
 
-  showAll = () => {
+  showAll = (e) => {
+    e.stopPropagation()
     // 刷新 betterscroll
     const { refresh } = this.props
     this.setState({
@@ -25,7 +26,7 @@ export default class ShopListRow extends React.PureComponent {
 
   render() {
     const { showAll } = this.state
-    const { data } = this.props
+    const { data, handleClick } = this.props
     const activities = data.activities || []
 
     const arrowCls = cls({
@@ -34,7 +35,7 @@ export default class ShopListRow extends React.PureComponent {
     })
 
     return (
-      <div className={styles['shop-row']}>
+      <div className={styles['shop-row']} onClick={handleClick}>
         <div className={styles['info-wrapper']}>
           <div className={styles.img}>
             <img alt="" src={data.image_url} />

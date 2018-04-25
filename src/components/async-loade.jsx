@@ -1,7 +1,7 @@
 
 import React from 'react'
 
-export default (loadCompoent) => {
+export default (loadCompoent, loading) => {
   return class AsyncComponet extends React.Component {
     constructor(props) {
       super(props)
@@ -23,7 +23,7 @@ export default (loadCompoent) => {
 
     render() {
       const { C } = this.state;
-      return C ? <C {...this.props} /> : null
+      return C ? <C {...this.props} /> : loading
     }
   }
 }

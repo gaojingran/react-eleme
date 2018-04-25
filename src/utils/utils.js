@@ -1,7 +1,6 @@
 
 
 /*eslint-disable*/
-
 /***
  * array = [
  *  { a: 1 }
@@ -23,5 +22,19 @@ export const unique = (array, key) => {
 
 
 export const formatPhone = (phone) => {
-  return phone.substr(0, 3) + '****' + phone.substr(7, 11);
+  return phone.substr(0, 3) + '****' + phone.substr(7, 11)
+}
+
+const baseUrl = '//fuss10.elemecdn.com'
+export const getImageUrl = (hash) => {
+  if (!hash) {
+    return null
+  }
+  const suffixArray = ['png', 'bmp', 'jpg', 'gif', 'jpeg', 'svg']
+  const suffix = suffixArray.find(v =>  hash.indexOf(v) !== -1)
+  if (!suffix) {
+    return null
+  } else {
+    return `${baseUrl}/${hash.substring(0,1)}/${hash.substring(1,3)}/${hash.substring(3)}.${suffix}`
+  }
 }

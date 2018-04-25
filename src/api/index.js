@@ -32,6 +32,12 @@ export const getBanner = (params) => { return HttpUtils.get('/elm/banner', param
 export const getShopList = (params) => { return HttpUtils.get('/elm/restaurants', params) }
 export const getOrderList = (params) => { return HttpUtils.get('/elm/orders', params) }
 
+// 商店
+export const getShopInfo = (params) => { return HttpUtils.get('/elm/restaurant_byid', params) }
+export const getShopRatings = (params) => { return HttpUtils.get('/elm/restaurant_ratings', params) }
+export const getShopFood = (params) => { return HttpUtils.get('/elm/restaurant_menu', params) }
+
+// 登陆 用户信息
 export const mobileSendCode = (params) => { return HttpUtils.post('/elm/mobile_send_code', params) }
 export const loginByMobile = (params) => { return HttpUtils.post('/elm/login_by_mobile', params) }
 export const getUserInfo = (params) => { return HttpUtils.get('/elm/users', params) }

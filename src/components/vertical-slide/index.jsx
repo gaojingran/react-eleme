@@ -16,7 +16,7 @@ const slideProps = {
 const defaultSlideProps = {
   loop: true,
   autoPlay: true,
-  interval: 1000,
+  interval: 900,
   click: true,
 }
 
