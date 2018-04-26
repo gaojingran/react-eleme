@@ -34,6 +34,7 @@ export default class Scroll extends React.Component {
   static proptypes = {
     style: PropTypes.object,
     className: PropTypes.string,
+    contentClassName: PropTypes.string,
     dataSource: PropTypes.array,
     probeType: PropTypes.oneOf([1, 2, 3]),
     click: PropTypes.bool,
@@ -300,7 +301,7 @@ export default class Scroll extends React.Component {
         style={this.props.style}
         ref={c => this.wrapper = c}>
         {/* 滚动部分 */}
-        <div className={styles['scroll-content']} ref={c => this.scrollContent = c}>
+        <div className={cls(styles['scroll-content'], this.props.contentClassName)} ref={c => this.scrollContent = c}>
           {/* 列表部分 */}
           {children}
           {/* 加载更多 */}
