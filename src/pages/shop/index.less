@@ -8,7 +8,7 @@
   position: fixed;
   .position-full;
   z-index: 1;
-  background-color: @fill-body-darken;
+  background-color: @fill-body;
   overflow: hidden;
 
   .nav {
@@ -41,8 +41,9 @@
       line-height: @nav-height;
       font-size: @font-size-medium-x;
       color: #fff;
-      transform: translateY(-100%);
-      opacity: 0;
+      transform: translateY(-@nav-height);
+      // opacity: 0;
+      will-change: transform;
     }
   }
 
@@ -50,9 +51,6 @@
     width: 100%;
     height: 424px;
     background-color: @fill-body;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
     position: relative;
     overflow: hidden;
     z-index: 1;
@@ -60,8 +58,14 @@
       position: absolute;
       .position-full;
       background-color: rgba(0,0,0,.6);
-      filter: blur(0px);
-      margin: -20px;
+      z-index: -1;
+    }
+    .imgBg {
+      position: absolute;
+      .position-full;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
       z-index: -1;
     }
 
@@ -174,6 +178,55 @@
         color: #fff;
       }
     }
+  }
 
+  .layer-bg {
+    position: absolute;
+    top: 424px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: @fill-body;
+    will-change: transform;
+  }
+
+  .tab-wrapper {
+    position: absolute;
+    top: 424px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    z-index: 2;
+    background-color:  @fill-body;
+    will-change: transform;
+    border-bottom: 1px solid @border-color;
+    display: flex;
+    .item {
+      flex: 1;
+      text-align: center;
+      line-height: 80px;
+      font-size: @font-size-medium;
+      font-weight: @font-weight-small;
+      color: @color-base;
+    }
+  }
+
+  .scroll-wrapper {
+    position: absolute;
+    top: 424px + 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    .outer-scroll {
+      overflow: visible;
+    }
+    .item {
+      width: 100%;
+      height: 300px;
+      background-color: #afa;
+      margin-bottom: 20px;
+    }
   }
 }
