@@ -17,6 +17,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Foods extends React.PureComponent {
+  componentWillUnmount() {
+    if (this.timer) {
+      clearTimeout(this.timer)
+      this.timer = null
+    }
+  }
+
   foodWrapperRender = (foodWrapper) => {
     this.foodWrapper = foodWrapper
     const listNode = foodWrapper ? foodWrapper.childNodes : []
@@ -46,10 +53,12 @@ export default class Foods extends React.PureComponent {
   menuClick = (i) => {
     if (!this.foodWrapper) return
     const items = this.foodWrapper.childNodes
-    this.props.shopUpdate({
-      foodMenuIndex: i,
-    })
     this.foodScroll.scrollToElement(items[i], 300)
+    this.timer = setTimeout(() => {
+      this.props.shopUpdate({
+        foodMenuIndex: i,
+      })
+    }, 300)
   }
 
   render() {
