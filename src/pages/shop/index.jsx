@@ -2,7 +2,6 @@
 
 import React from 'react'
 import qs from 'query-string'
-import cls from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getImageUrl } from 'utils/utils'
@@ -10,6 +9,8 @@ import SvgIcon from 'components/icon-svg'
 import VerticalSlide from 'components/vertical-slide'
 import Scroll from 'components/scroll'
 import { prefixStyle } from 'utils/dom'
+import FoodMenu from './food-menu'
+
 import Badge from '../common-components/badge'
 import { shopUpdate, shopDestroy, shopInit } from '../../stores/shop'
 import styles from './index.less'
@@ -32,13 +33,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Shop extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      menuIndex: 0,
-    }
-  }
-
   componentDidMount() {
     const query = qs.parse(this.props.location.search) || {}
     this.props.shopInit(query)
@@ -77,11 +71,48 @@ export default class Shop extends React.Component {
     this.navContent.style[transform] = `translate3d(0,${navTranslateY}px,0)`
     this.imgBg.style[transform] = `scale(${scale})`
     this.blurBg.style[backdrop] = `blur(${blur}px)`
+
+    const scrollY = Math.abs(y)
+    if (this.listHeight.length) {
+      this.listHeight.forEach((height, i) => {
+        const nextHeight = this.listHeight[i + 1]
+        if (nextHeight && scrollY >= height && scrollY < nextHeight) {
+          this.props.shopUpdate({
+            foodMenuIndex: i,
+          })
+        }
+      })
+    }
+  }
+
+  foodWrapperRender = (foodWrapper) => {
+    this.foodWrapper = foodWrapper
+    const listNode = foodWrapper ? foodWrapper.childNodes : []
+    let height = 0
+    // 计算每一个分类的高度
+    this.listHeight = []
+    this.listHeight.push(height)
+    for (let i = 0; i < listNode.length; i++) {
+      this.listHeight.push(height += listNode[i].clientHeight)
+    }
+  }
+
+  menuClick = (i) => {
+    if (!this.foodWrapper) return
+    const items = this.foodWrapper.childNodes
+    this.props.shopUpdate({
+      foodMenuIndex: i,
+    })
+    this.outerScroll.scrollToElement(items[i], 300)
   }
 
   render() {
-    const { menuIndex } = this.state
-    const { info, menu, history } = this.props
+    const {
+      info,
+      menu,
+      loading,
+      history,
+    } = this.props
     const shopImage = getImageUrl(info.image_path)
     const activities = info.activities || []
 
@@ -98,8 +129,7 @@ export default class Shop extends React.Component {
       scroll: pos => this.handleScroll(pos),
     }
 
-    const menuCls = v => cls([styles.item, v === menuIndex ? styles.active : null])
-    return (
+    return loading ? null : (
       <div className={styles.shop}>
 
         <div className={styles.nav}>
@@ -164,18 +194,12 @@ export default class Shop extends React.Component {
         </div>
 
         <div className={styles['scroll-wrapper']}>
-          <Scroll {...scrollWrapProps}>
+          <Scroll {...scrollWrapProps} ref={c => this.outerScroll = c}>
             <div className={styles['food-menu']}>
               <div className={styles.menu} ref={c => this.foodMenu = c}>
-                {
-                  menu.map((v, i) => (
-                    <div key={i} className={menuCls(i)}>
-                      <span className={styles.text}>{v.name}</span>
-                    </div>
-                  ))
-                }
+                <FoodMenu menuClick={this.menuClick} />
               </div>
-              <div className={styles.food}>
+              <div className={styles.food} ref={this.foodWrapperRender}>
                 {
                   menu.map((v, i) => (
                     <div className={styles.wrapper} key={i}>

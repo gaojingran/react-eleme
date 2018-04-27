@@ -4,6 +4,7 @@
 
 @nav-height: @bar-height - 11px;
 @tab-menu-height: 80px;
+@shopcart-height: 100px;
 
 .line {
   width: 100%;
@@ -232,7 +233,7 @@
       background-color: @fill-body;
     }
     .outer-scroll-content {
-      padding-bottom: 100px;
+      padding-bottom: @shopcart-height;
     }
 
     .food-menu {
@@ -242,34 +243,9 @@
         flex: 0 0 160px;
         width: 160px;
         background-color: @fill-body-darken;
-        will-change: top;
-        .item {
-          padding: 30px 15px;
-          border-top: 1px solid @border-color;
-          .text {
-            font-size: @font-size-small;
-            font-weight: @font-weight-small;
-            color: @color-base;
-          }
-          &.active {
-            background-color: @fill-body;
-            position: relative;
-            &:after {
-              content: '' !important;
-              display: block;
-              position: absolute;
-              left: 0;
-              top: 0;
-              bottom: 0;
-              width: 3px;
-              background-color: @badge-color-open;
-            }
-            .text {
-              color: @color-title;
-              font-weight: @font-weight-medium;
-            }
-          }
-        }
+        will-change: transform;
+        height: calc(100vh - @nav-height - @tab-menu-height - @shopcart-height + 20px);
+
       }
       .food {
         flex: 1;
@@ -354,7 +330,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 100px;
+    height: @shopcart-height;
     background-color: #505052;
   }
 }

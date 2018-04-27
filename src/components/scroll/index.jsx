@@ -266,12 +266,12 @@ export default class Scroll extends React.Component {
   }
 
   // 滚动到某位置
-  scrollTo = () => {
+  scrollTo() {
     this.bs && this.bs.scrollTo.apply(this.bs, arguments)
   }
 
   // 滚动到某个dom
-  scrollToElement = () => {
+  scrollToElement() {
     this.bs && this.bs.scrollToElement.apply(this.bs, arguments)
   }
 

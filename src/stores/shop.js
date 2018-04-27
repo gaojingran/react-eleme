@@ -9,6 +9,7 @@ const initState = {
   loading: true,
   info: {},
   menu: [],
+  foodMenuIndex: 0,
   ratings: [],
 }
 
