@@ -4,7 +4,8 @@
   "extends": "airbnb",
   "globals": {
     "document": true,
-    "AMap": true
+    "AMap": true,
+    "window": true
   },
   "rules": {
     "semi": [0],

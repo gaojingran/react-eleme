@@ -1,0 +1,141 @@
+
+
+@import '../../../assets/css/theme.less';
+@import '../../../assets/css/mixin.less';
+
+.line {
+  width: 100%;
+  height: 1px;
+}
+
+.food-wrapper {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-bottom:  @shop-cart-height;
+  display: flex;
+  .menu {
+    flex: 0 0 160px;
+    width: 160px;
+    height: 100%;
+    margin-right: 20px;
+    background-color: @fill-body-darken;
+  }
+  .food {
+    flex: 1;
+    width: 0;
+    background-color: @fill-body;
+    position: relative;
+    z-index: 1;
+    .wrapper {
+      .title {
+        font-size: 0;
+        padding: 15px 60px 15px 0;
+        .tip, .desc {
+          display: inline-block;
+          vertical-align: middle;
+          .no-wrap;
+        }
+        .tip {
+          font-size: @font-size-small;
+          color: @color-title;
+        }
+        .desc {
+          font-size: @font-size-small;
+          font-weight: @font-weight-small;
+          transform: scale(.8);
+          transform-origin: 0;
+          margin-left: 20px;
+        }
+      }
+      .item {
+        display: flex;
+        box-sizing: border-box;
+        padding: 20px 20px 20px 0;
+        .img {
+          flex: 0 0 150px;
+          width: 150px;
+          height: 150px;
+          margin-right: 20px;
+          img {
+            width: 100%;
+          }
+        }
+        .content {
+          flex: 1;
+          width: 0;
+          .name {
+            .no-wrap;
+            font-size: @font-size-medium;
+            color: @color-title;
+            line-height: 34px;
+            margin-bottom: 6px;
+          }
+          .description {
+            font-size: @font-size-small;
+            font-weight: @font-weight-small;
+            transform: scale(.8);
+            transform-origin: 0;
+            color: @color-base;
+            line-height: 32px;
+            .no-wrap;
+          }
+          .info {
+            font-size: 0;
+            span {
+              display: inline-block;
+              vertical-align: middle;
+              font-size: @font-size-small;
+              font-weight: @font-weight-small;
+              color: @color-base;
+              transform: scale(.9);
+              margin: 4px 8px 4px -6px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+.food-menu {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .scroll {
+    background-color: @fill-body-darken;
+  }
+  .item {
+    padding: 30px 15px;
+    border-top: 1px solid @border-color;
+    &:first-child {
+      border-top: none;
+    }
+    .text {
+      font-size: @font-size-small;
+      font-weight: @font-weight-small;
+      color: @color-base;
+    }
+    &.active {
+      background-color: @fill-body;
+      position: relative;
+      &:after {
+        content: '' !important;
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background-color: @badge-color-open;
+      }
+      .text {
+        color: @color-title;
+        font-weight: @font-weight-medium;
+      }
+    }
+  }
+
+}

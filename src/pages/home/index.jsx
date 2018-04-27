@@ -79,8 +79,12 @@ export default class Home extends React.Component {
     const { history, locationInfo } = this.props
     const { id } = val
     const { latitude, longitude } = locationInfo
+    // history.push({
+    //   pathname: '/shop',
+    //   search: `?restaurant_id=${id}&latitude=${latitude}&longitude=${longitude}`,
+    // })
     history.push({
-      pathname: '/shop',
+      pathname: '/shop-detail',
       search: `?restaurant_id=${id}&latitude=${latitude}&longitude=${longitude}`,
     })
   }

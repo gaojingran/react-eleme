@@ -50,6 +50,10 @@ export default class Scroll extends React.Component {
       PropTypes.bool,
       PropTypes.object,
     ]),
+    bounce: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.object,
+    ]),
     momentum: PropTypes.bool,
     startY: PropTypes.number,
     refreshDelay: PropTypes.number,
@@ -72,6 +76,7 @@ export default class Scroll extends React.Component {
     pullDownRefresh: false,
     pullUpLoad: false,
     momentum: true,
+    bounce: true,
     startY: 0,
     refreshDelay: 20,
     freeScroll: false,
@@ -127,7 +132,7 @@ export default class Scroll extends React.Component {
     const { probeType, click, freeScroll,
       direction, scrollbar, pullDownRefresh,
       pullUpLoad, startY, horizontalWidth,
-      listenScroll, scroll, listenBeforeScroll, beforeScrollStart, momentum } = this.props;
+      listenScroll, scroll, listenBeforeScroll, beforeScrollStart, momentum, bounce } = this.props;
     // 如果开启freeScroll设置宽度
     if (freeScroll || direction === DIRECTION_H) {
       this.scrollContent.style.width = horizontalWidth + 'px'
@@ -142,6 +147,7 @@ export default class Scroll extends React.Component {
       freeScroll,
       pullDownRefresh,
       momentum,
+      bounce,
       scrollY: freeScroll || direction === DIRECTION_V,
       scrollX: DIRECTION_H || direction === DIRECTION_H,
     });
