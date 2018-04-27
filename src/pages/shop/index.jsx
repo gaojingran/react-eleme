@@ -2,6 +2,7 @@
 
 import React from 'react'
 import qs from 'query-string'
+import cls from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getImageUrl } from 'utils/utils'
@@ -33,6 +34,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Shop extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      navSelectIndex: 0,
+    }
+  }
   componentDidMount() {
     const query = qs.parse(this.props.location.search) || {}
     this.props.shopInit(query)
@@ -106,6 +113,10 @@ export default class Shop extends React.Component {
     this.outerScroll.scrollToElement(items[i], 300)
   }
 
+  navTabClick = (i) => {
+    this.setState({ navSelectIndex: i })
+  }
+
   render() {
     const {
       info,
@@ -113,6 +124,7 @@ export default class Shop extends React.Component {
       loading,
       history,
     } = this.props
+    const { navSelectIndex } = this.state
     const shopImage = getImageUrl(info.image_path)
     const activities = info.activities || []
 
@@ -126,8 +138,12 @@ export default class Shop extends React.Component {
       contentClassName: styles['outer-scroll-content'],
       probeType: 3,
       listenScroll: true,
+      momentum: false,
       scroll: pos => this.handleScroll(pos),
     }
+
+    const activeCls = i => cls([styles.item, navSelectIndex === i ? styles.active : null])
+    const contentStyle = i => ({ display: navSelectIndex === i ? 'flex' : 'none' })
 
     return loading ? null : (
       <div className={styles.shop}>
@@ -188,14 +204,14 @@ export default class Shop extends React.Component {
         <div className={styles['layer-bg']} ref={c => this.layerBg = c} />
 
         <div className={styles['tab-wrapper']} ref={c => this.tabBar = c}>
-          <div className={styles.item}>点餐</div>
-          <div className={styles.item}>评价</div>
-          <div className={styles.item}>商家</div>
+          <div className={activeCls(0)} onClick={() => this.navTabClick(0)}>点餐</div>
+          <div className={activeCls(1)} onClick={() => this.navTabClick(1)}>评价</div>
+          <div className={activeCls(2)} onClick={() => this.navTabClick(2)}>商家</div>
         </div>
 
         <div className={styles['scroll-wrapper']}>
           <Scroll {...scrollWrapProps} ref={c => this.outerScroll = c}>
-            <div className={styles['food-menu']}>
+            <div className={styles['food-menu']} style={contentStyle(0)}>
               <div className={styles.menu} ref={c => this.foodMenu = c}>
                 <FoodMenu menuClick={this.menuClick} />
               </div>
