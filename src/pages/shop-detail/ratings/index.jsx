@@ -53,7 +53,7 @@ export default class Ratings extends React.PureComponent {
       scores,
       tagIndex,
     } = this.props
-    console.log(ratings, tags, scores, tagIndex)
+
     const compare_rating = numeral(scores.compare_rating * 100 || 0).format('0.00')
     const service_score = numeral(scores.service_score || 0).format('0.0')
     const food_score = numeral(scores.food_score || 0).format('0.0')
