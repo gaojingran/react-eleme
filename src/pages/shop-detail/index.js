@@ -17,7 +17,7 @@ import { shopUpdate, shopDestroy, shopInit } from '../../stores/shop'
 import styles from './index.less'
 
 const transform = prefixStyle('transform')
-const backdrop = prefixStyle('backdrop-filter')
+const filter = prefixStyle('filter')
 
 const mapStateToProps = ({ shop }) => ({
   loading: shop.loading,
@@ -59,7 +59,7 @@ export default class ShopDetail extends React.Component {
       blur = Math.min(20, percent * 20)
     }
     this.navBar.style[transform] = `translate3d(0,${navY}px,0)`
-    this.blurBg.style[backdrop] = `blur(${blur}px)`
+    this.imgBg.style[filter] = `blur(${blur}px)`
   }
 
   tabClick = (i) => {
@@ -140,8 +140,10 @@ export default class ShopDetail extends React.Component {
               </div>
               <div className={styles.sum}>{activities.length}个优惠</div>
             </div>
-            <div className={styles.imgBg} style={{ backgroundImage: `url(${shopImage})` }} />
-            <div className={styles.filter} ref={c => this.blurBg = c} />
+            <div className={styles.imgBg} ref={c => this.imgBg = c}>
+              <div className={styles.img} style={{ backgroundImage: `url(${shopImage})` }} />
+            </div>
+            <div className={styles.mask} />
           </div>
 
           <div className={styles.tab}>

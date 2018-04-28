@@ -16,12 +16,21 @@ export default class Login extends React.Component {
   state = {
     phone: '',
     code: '',
+    time: 0,
+  }
+
+  componentWillUnmount() {
+    if (this.timer) {
+      clearInterval(this.timer)
+      this.timer = null
+    }
   }
 
   validate_token = undefined       // eslint-disable-line
 
   getCode = async () => {
-    const { phone } = this.state
+    const { phone, time } = this.state
+    if (time > 0) return
     if (!phone) return Toast.info('请填写手机号')
     try {
       const { data } = await mobileSendCode({
@@ -30,6 +39,19 @@ export default class Login extends React.Component {
         captcha_value: '',
       })
       this.validate_token = data['validate_token']      // eslint-disable-line
+
+      let count = 60
+      this.timer = setInterval(() => {
+        if (count > 0) {
+          count--
+          this.setState({
+            time: count,
+          })
+        } else {
+          clearInterval(this.timer)
+          this.timer = null
+        }
+      }, 1000)
     } catch ({ err }) {
       Toast.info(err)
     }
@@ -74,7 +96,7 @@ export default class Login extends React.Component {
   }
 
   render() {
-    const { phone, code } = this.state
+    const { phone, code, time } = this.state
 
     return (
       <div className={styles.login}>
@@ -84,7 +106,9 @@ export default class Login extends React.Component {
         <div className={styles.form}>
           <div className={styles.item}>
             <input type="tel" maxLength={11} placeholder="手机号" value={phone} onChange={v => this.changeState(v, 'phone')} />
-            <button className={styles['code-btn']} onClick={this.getCode}>获取验证码</button>
+            <button className={styles['code-btn']} onClick={this.getCode}>
+              {time > 0 ? `${time}秒后获取` : '获取验证码'}
+            </button>
           </div>
           <div className={styles.item}>
             <input type="tel" maxLength={8} placeholder="验证码" value={code} onChange={v => this.changeState(v, 'code')} />
