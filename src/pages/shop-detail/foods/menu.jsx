@@ -17,7 +17,7 @@ export default class Menu extends React.PureComponent {
     const menuCls = v => cls([styles.item, v === foodMenuIndex ? styles.active : null])
     return (
       <div className={styles['food-menu']}>
-        <Scroll dataSource={menu} className={styles.scroll}>
+        <Scroll dataSource={menu} className={styles.scroll} stopPropagation={true}>
           {
             menu.map((v, i) => (
               <div key={i} className={menuCls(i)} onClick={() => menuClick(i)}>

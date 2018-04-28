@@ -36,6 +36,8 @@ export const getOrderList = (params) => { return HttpUtils.get('/elm/orders', pa
 export const getShopInfo = (params) => { return HttpUtils.get('/elm/restaurant_byid', params) }
 export const getShopRatings = (params) => { return HttpUtils.get('/elm/restaurant_ratings', params) }
 export const getShopFood = (params) => { return HttpUtils.get('/elm/restaurant_menu', params) }
+export const getRatingTags = (params) => { return HttpUtils.get('/elm/rating_tags', params) }
+export const getRatingScores = (params) => { return HttpUtils.get('/elm/rating_scores', params) }
 
 // 登陆 用户信息
 export const mobileSendCode = (params) => { return HttpUtils.post('/elm/mobile_send_code', params) }

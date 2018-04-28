@@ -62,7 +62,7 @@ export default class Foods extends React.PureComponent {
   }
 
   render() {
-    const { menu } = this.props
+    const { menu, show } = this.props
     const scrollWrapProps = {
       dataSource: menu,
       probeType: 3,
@@ -71,7 +71,7 @@ export default class Foods extends React.PureComponent {
     }
 
     return (
-      <div className={styles['food-wrapper']}>
+      <div className={styles['food-wrapper']} style={{ display: show ? 'flex' : 'none' }}>
         <div className={styles.menu}>
           <Menu menuClick={this.menuClick} />
         </div>

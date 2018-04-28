@@ -54,6 +54,7 @@ export default class Scroll extends React.Component {
       PropTypes.bool,
       PropTypes.object,
     ]),
+    stopPropagation: PropTypes.bool,
     momentum: PropTypes.bool,
     startY: PropTypes.number,
     refreshDelay: PropTypes.number,
@@ -81,6 +82,7 @@ export default class Scroll extends React.Component {
     refreshDelay: 20,
     freeScroll: false,
     horizontalWidth: 0,
+    stopPropagation: false,
     pullingDown: () => {},
     pullingUp: () => {},
     scroll: () => {},
@@ -132,10 +134,13 @@ export default class Scroll extends React.Component {
     const { probeType, click, freeScroll,
       direction, scrollbar, pullDownRefresh,
       pullUpLoad, startY, horizontalWidth,
-      listenScroll, scroll, listenBeforeScroll, beforeScrollStart, momentum, bounce } = this.props;
+      listenScroll, scroll, listenBeforeScroll,
+      beforeScrollStart, momentum, bounce,
+      stopPropagation } = this.props;
     // 如果开启freeScroll设置宽度
     if (freeScroll || direction === DIRECTION_H) {
-      this.scrollContent.style.width = horizontalWidth + 'px'
+      const width = horizontalWidth || this.wrapper.clientWidth
+      this.scrollContent.style.width = width + 'px'
     }
     // 创建betterScroll
     this.bs = new BScroll(this.wrapper, {
@@ -148,8 +153,9 @@ export default class Scroll extends React.Component {
       pullDownRefresh,
       momentum,
       bounce,
+      stopPropagation,
+      scrollX: freeScroll || direction === DIRECTION_H,
       scrollY: freeScroll || direction === DIRECTION_V,
-      scrollX: DIRECTION_H || direction === DIRECTION_H,
     });
     // 开启滚动监听到话调用父组件callback
     if (listenScroll) {

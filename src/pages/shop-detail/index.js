@@ -11,6 +11,8 @@ import Scroll from 'components/scroll'
 import { prefixStyle } from 'utils/dom'
 import Badge from '../common-components/badge'
 import Foods from './foods'
+import Ratings from './ratings'
+import ShopInfo from './shop'
 import { shopUpdate, shopDestroy, shopInit } from '../../stores/shop'
 import styles from './index.less'
 
@@ -149,7 +151,9 @@ export default class ShopDetail extends React.Component {
           </div>
 
           <div className={styles.body}>
-            <Foods />
+            <Foods show={tabIndex === 0} />
+            <Ratings show={tabIndex === 1} />
+            <ShopInfo show={tabIndex === 2} />
           </div>
         </Scroll>
 
