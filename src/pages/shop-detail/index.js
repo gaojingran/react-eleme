@@ -13,6 +13,7 @@ import Badge from '../common-components/badge'
 import Foods from './foods'
 import Ratings from './ratings'
 import ShopInfo from './shop'
+import Skeleton from './skeleton-screen'
 import { shopUpdate, shopDestroy, shopInit } from '../../stores/shop'
 import styles from './index.less'
 
@@ -87,8 +88,7 @@ export default class ShopDetail extends React.Component {
     }
 
     const activeCls = i => cls([styles.item, tabIndex === i ? styles.active : null])
-
-    return loading ? null : (
+    return loading ? <Skeleton /> : (
       <div className={styles.shop}>
         <div className={styles.navbar}>
           <div className={styles.icon} onClick={() => history.goBack()}>
