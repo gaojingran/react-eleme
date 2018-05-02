@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchOrderList } from 'stores/order'
 import Scroll from 'components/scroll'
-import NabBar from '../common-components/nav-bar'
+import NavBar from '../common-components/nav-bar'
 import withTabBar from '../common-components/tab-bar'
 import OrderRow from '../common-components/order-list-row'
 import AuthErr from '../common-components/auth-err'
@@ -81,7 +81,7 @@ export default class Order extends React.PureComponent {
 
     return (
       <div className={styles.order}>
-        <NabBar
+        <NavBar
           className={styles.nav}
           ref={this.getTopBarHeight}
           title="订单"

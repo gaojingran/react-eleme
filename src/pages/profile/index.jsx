@@ -4,7 +4,7 @@ import React from 'react'
 import SvgIcon from 'components/icon-svg'
 import { connect } from 'react-redux'
 import { formatPhone } from 'utils/utils'
-import NabBar from '../common-components/nav-bar'
+import NavBar from '../common-components/nav-bar'
 import withTabBar from '../common-components/tab-bar'
 import styles from './index.less'
 
@@ -28,7 +28,7 @@ export default class Profile extends React.Component {
     }
     return (
       <div className={styles.root}>
-        <NabBar
+        <NavBar
           title="我的"
           iconLeft="#back"
           leftClick={() => this.props.history.goBack()} />

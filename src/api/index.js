@@ -45,3 +45,9 @@ export const loginByMobile = (params) => { return HttpUtils.post('/elm/login_by_
 export const getUserInfo = (params) => { return HttpUtils.get('/elm/users', params) }
 
 export const getAddress = (params) => { return HttpUtils.get('/elm/address', params) }
+export const delAddress = (params) => { return HttpUtils.get('/elm/del_address', params) }
+export const upAddress = (params) => { return HttpUtils.post('/elm/update_address', params) }
+export const addAddress = (params) => { return HttpUtils.post('/elm/add_address', params) }
+
+// 根据经纬度 关键词 获取地址
+export const getNearby = (params) => { return HttpUtils.get('/elm/search_nearby', params) }

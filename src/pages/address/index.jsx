@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Toast from 'components/toast'
 import SvgIcon from 'components/icon-svg'
 import Scroll from 'components/scroll'
-import NabBar from '../common-components/nav-bar'
+import NavBar from '../common-components/nav-bar'
 import NoData from '../common-components/no-data'
 import AuthError from '../common-components/auth-err'
 import AddressRow from './address-row'
@@ -50,13 +50,20 @@ export default class Address extends React.Component {
     }
   }
 
+  goEdit = (val = false) => {
+    this.props.history.push({
+      pathname: '/address-edit',
+      state: val,
+    })
+  }
+
   render() {
     const { isLogin } = this.props
     const { list } = this.state
-    console.log(list)
+
     return !isLogin ? <AuthError /> : (
       <div className={styles.address}>
-        <NabBar
+        <NavBar
           title="我的地址"
           iconLeft="#back"
           leftClick={() => this.props.history.goBack()} />
@@ -66,14 +73,14 @@ export default class Address extends React.Component {
               <Scroll dataSource={list} className={styles.scroll}>
                 {
                   list.map(v => (
-                    <AddressRow key={v.id} data={v} />
+                    <AddressRow key={v.id} data={v} handleClick={() => this.goEdit(v)} />
                   ))
                 }
               </Scroll>
             </div>
           ) : <NoData />
         }
-        <button className={styles.add}>
+        <button className={styles.add} onClick={() => this.goEdit()}>
           <div className={styles.icon}>
             <SvgIcon name="#round_add" />
           </div>

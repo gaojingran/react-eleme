@@ -9,7 +9,6 @@ export default class AddressRow extends React.PureComponent {
   render() {
     const { data } = this.props
     const { sexMap } = config
-    console.log(sexMap)
     return (
       <div className={styles.row}>
         <div className={styles.desc}>
@@ -20,7 +19,7 @@ export default class AddressRow extends React.PureComponent {
           </div>
           <p className={styles.address}>{data.address + data.address_detail}</p>
         </div>
-        <div className={styles.edit}>
+        <div className={styles.edit} onClick={this.props.handleClick}>
           <SvgIcon name="#edit" />
         </div>
       </div>
