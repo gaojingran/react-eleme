@@ -100,18 +100,17 @@ export default class Scroll extends React.Component {
       pullUpDirty: true,       // 显示footer中pullUpTxt true 显示加载更多 false 没有更多数据
       pullDownStyle: '',       // 下拉后样式
       bubbleY: 0,              // bubble y值
+      pullDownStyle: props.pullDownRefresh ? { top: `${this.pullDownInitTop}px` } : {},
     }
-    this.pullDownInitTop = 0
-  }
-
-  componentWillMount() {
-    if (this.props.pullDownRefresh) {
-      this.initPullDownStyle()
-    }
+    this.pullDownInitTop = props.pullDownRefresh ? -50 : 0
   }
 
   componentDidMount() {
     this.initScroll()
+  }
+
+  componentWillUnmount() {
+    this.bs && this.bs.destroy()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -120,13 +119,6 @@ export default class Scroll extends React.Component {
         this.forceUpdate(true)
       }, nextProps.refreshDelay)
     }
-  }
-
-  initPullDownStyle = () => {
-    this.pullDownInitTop = -50
-    this.setState({
-      pullDownStyle: { top: `${this.pullDownInitTop}px` }
-    })
   }
 
   initScroll = () => {

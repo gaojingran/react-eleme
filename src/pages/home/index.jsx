@@ -43,6 +43,10 @@ export default class Home extends React.Component {
     this.props.homeInit()
   }
 
+  componentWillUnmount() {
+    this.props.homeUpdate({ topBarShrink: false })
+  }
+
   getTopBarHeight = (topBar) => {
     if (topBar) {
       this.setState({
@@ -64,6 +68,7 @@ export default class Home extends React.Component {
     if (y < -topBarHeight) {
       topBarShrink = true
     }
+    console.log(topBarHeight)
     this.props.homeUpdate({ topBarShrink })
   }
 
