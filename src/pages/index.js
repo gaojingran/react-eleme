@@ -52,6 +52,7 @@ export default () => (
       <Route path="/profile" component={asyncLoad(() => import('./profile'), <Loading />)} />
       <Route path="/login" component={asyncLoad(() => import('./login'), <Loading />)} />
       <Route path="/shop-detail" component={asyncLoad(() => import('./shop-detail'), <Loading />)} />
+      <Route path="/address" component={asyncLoad(() => import('./address'), <Loading />)} />
     </Switch>
   </React.Fragment>
 )

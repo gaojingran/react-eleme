@@ -43,3 +43,5 @@ export const getRatingScores = (params) => { return HttpUtils.get('/elm/rating_s
 export const mobileSendCode = (params) => { return HttpUtils.post('/elm/mobile_send_code', params) }
 export const loginByMobile = (params) => { return HttpUtils.post('/elm/login_by_mobile', params) }
 export const getUserInfo = (params) => { return HttpUtils.get('/elm/users', params) }
+
+export const getAddress = (params) => { return HttpUtils.get('/elm/address', params) }

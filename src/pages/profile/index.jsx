@@ -23,6 +23,9 @@ export default class Profile extends React.Component {
     const goDetail = () => {
       console.log('123123')
     }
+    const goAddress = () => {
+      history.push('/address')
+    }
     return (
       <div className={styles.root}>
         <NabBar
@@ -74,7 +77,7 @@ export default class Profile extends React.Component {
         </div>
 
         <div className={styles.list}>
-          <div className={styles.item}>
+          <div className={styles.item} onClick={goAddress}>
             <div className={styles.icon}>
               <SvgIcon name="#pointer" />
             </div>
