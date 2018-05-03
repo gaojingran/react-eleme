@@ -17,14 +17,9 @@ export default class Profile extends React.Component {
   render() {
     const { history, userInfo, isLogin } = this.props
     const { username, mobile } = userInfo
-    const goLogin = () => {
-      history.push('/login')
-    }
+    const changePage = path => history.push(path)
     const goDetail = () => {
       console.log('123123')
-    }
-    const goAddress = () => {
-      history.push('/address')
     }
     return (
       <div className={styles.root}>
@@ -33,7 +28,7 @@ export default class Profile extends React.Component {
           iconLeft="#back"
           leftClick={() => this.props.history.goBack()} />
 
-        <div className={styles['profile-info']} onClick={!isLogin ? goLogin : goDetail}>
+        <div className={styles['profile-info']} onClick={!isLogin ? () => changePage('/login') : goDetail}>
           <div className={styles.avatar}>
             <SvgIcon name="#avatar" className={styles.icon} />
           </div>
@@ -77,9 +72,19 @@ export default class Profile extends React.Component {
         </div>
 
         <div className={styles.list}>
-          <div className={styles.item} onClick={goAddress}>
+          <div className={styles.item} onClick={() => changePage('/order')}>
             <div className={styles.icon}>
-              <SvgIcon name="#pointer" />
+              <SvgIcon name="#drumstick" />
+            </div>
+            <p className={styles.desc}>我的订单</p>
+            <SvgIcon name="#right" className={styles['icon-right']} />
+          </div>
+        </div>
+
+        <div className={styles.list}>
+          <div className={styles.item} onClick={() => changePage('/address')}>
+            <div className={styles.icon}>
+              <SvgIcon name="#carrot" />
             </div>
             <p className={styles.desc}>我的地址</p>
             <SvgIcon name="#right" className={styles['icon-right']} />

@@ -68,7 +68,6 @@ export default class Home extends React.Component {
     if (y < -topBarHeight) {
       topBarShrink = true
     }
-    console.log(topBarHeight)
     this.props.homeUpdate({ topBarShrink })
   }
 

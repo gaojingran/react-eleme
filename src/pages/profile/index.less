@@ -103,7 +103,9 @@
   .list {
     background-color: @fill-body;
     border-top: 1px solid @border-color;
-    border-bottom: 1px solid @border-color;
+    &:last-child {
+      border-bottom: 1px solid @border-color;
+    }
     .item {
       background-color: @fill-body;
       display: flex;
