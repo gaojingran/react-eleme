@@ -38,3 +38,13 @@ export const getImageUrl = (hash) => {
     return `${baseUrl}/${hash.substring(0,1)}/${hash.substring(1,3)}/${hash.substring(3)}.${suffix}`
   }
 }
+
+export const debounce = function(fn, interval = 600) {
+  let timeout = null
+  return function() {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+        fn.apply(this, arguments)
+    }, interval)
+  }
+}

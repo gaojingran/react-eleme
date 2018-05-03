@@ -8,10 +8,12 @@ import styles from './index.less'
 export default class Loading extends React.Component {
   static proptypes = {
     title: Proptypes.string,
+    style: Proptypes.object,
   }
 
   static defaultProps = {
-    title: ''
+    title: '',
+    style: {},
   }
 
   constructor(props) {
@@ -25,9 +27,9 @@ export default class Loading extends React.Component {
 
   render() {
     const { width, height } = this.state
-    const { title } = this.props
+    const { title, style } = this.props
     return (
-      <div className={styles.loading}>
+      <div className={styles.loading} style={style}>
         <img
           src={loading}
           width={width}

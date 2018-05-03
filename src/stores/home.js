@@ -37,12 +37,16 @@ export const homeUpdate = (params) => {
 export const homeInit = () => {
   return async (dispatch, getState) => {
     const { init } = getState().home
+    let { locationInfo } = getState().home
     if (init) return
     try {
       // 定理位置
-      const geoInfo = await getGeolocation()
-      dispatch(homeUpdate({ locationInfo: geoInfo.data }))
-      const location = { ...omit(geoInfo.data, ['address']) }
+      if (!locationInfo.latitude && !locationInfo.longitude) {
+        const geoInfo = await getGeolocation()
+        dispatch(homeUpdate({ locationInfo: geoInfo.data }))
+        locationInfo = geoInfo.data      // eslint-disable-line
+      }
+      const location = { ...omit(locationInfo, ['address']) }
       // 获取banner entry
       const [banner, entry, shoplist] = await Promise.all([
         getBanner(location),

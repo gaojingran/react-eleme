@@ -2,15 +2,19 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
+import { Route } from 'react-router-dom'
 import cls from 'classnames'
 import Toast from 'components/toast'
 import SvgIcon from 'components/icon-svg'
+import asyncLoad from 'components/async-loade'
 import config from 'utils/config'
 import NavBar from '../common-components/nav-bar'
 import AuthError from '../common-components/auth-err'
+import Loading from '../common-components/lazy-loading'
 import { delAddress } from '../../api'
 import styles from './index.less'
 
+const AddressNearby = asyncLoad(() => import('../address-nearby'), <Loading />)
 
 const Badge = ({ text, select, handleClick }) => (
   <div
@@ -68,15 +72,19 @@ export default class AddressEdit extends React.Component {
     }
   }
 
+  handleAddressClick = () => {
+    console.log(123)
+  }
+
   render() {
-    const { isLogin } = this.props
-    const { info } = this.state
+    const { isLogin, match, history } = this.props
+    const { info = {} } = this.state
     const navText = info ? '编辑地址' : '更新地址'
     const navProps = info ? {
       iconRight: '#delete',
       rightClick: this.handleDelete,
     } : {}
-
+    console.log(match)
     return !isLogin ? <AuthError /> : (
       <div className={styles.address}>
         <NavBar
@@ -119,7 +127,7 @@ export default class AddressEdit extends React.Component {
             <div className={`${styles.line} hairline-h`} />
           </div>
 
-          <div className={styles.item}>
+          <div className={styles.item} onClick={() => history.push(`${match.url}/address`)}>
             <div className={styles.label}>位置</div>
             <div className={styles.control}>
               <input className={styles.input} placeholder="小区/写字楼/学校" maxLength={11} defaultValue={info.address} />
@@ -161,6 +169,12 @@ export default class AddressEdit extends React.Component {
           </div>
         </div>
         <button className={styles.btn} onClick={this.submit}>确定</button>
+
+        <Route
+          path={`${match.path}/address`}
+          component={
+            props => <AddressNearby {...props} addressClick={this.handleAddressClick} />
+          } />
       </div>
     )
   }

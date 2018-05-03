@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Toast from 'components/toast'
 import SvgIcon from 'components/icon-svg'
 import Scroll from 'components/scroll'
+import Loading from 'components/loading'
 import NavBar from '../common-components/nav-bar'
 import NoData from '../common-components/no-data'
 import AuthError from '../common-components/auth-err'
@@ -20,8 +21,8 @@ export default class Address extends React.Component {
     super(props)
     this.state = {
       list: [],
+      loading: false,
     }
-    this.loading = false
   }
 
   componentDidMount() {
@@ -36,16 +37,14 @@ export default class Address extends React.Component {
 
   getAddress = async () => {
     try {
-      Toast.loading('加载中...', 0)
-      this.loading = true
+      this.setState({ loading: true })
       const { data } = await getAddress()
-      Toast.hide()
-      this.loading = false
       this.setState({
         list: data,
+        loading: false,
       })
     } catch ({ err }) {
-      this.loading = false
+      this.setState({ loading: false })
       Toast.info(err)
     }
   }
@@ -59,7 +58,7 @@ export default class Address extends React.Component {
 
   render() {
     const { isLogin } = this.props
-    const { list } = this.state
+    const { list, loading } = this.state
 
     return !isLogin ? <AuthError /> : (
       <div className={styles.address}>
@@ -68,7 +67,7 @@ export default class Address extends React.Component {
           iconLeft="#back"
           leftClick={() => this.props.history.goBack()} />
         {
-          list.length ? (
+          loading ? <Loading style={{ marginTop: 20 }} /> : list.length ? (
             <div className={styles.list}>
               <Scroll dataSource={list} className={styles.scroll}>
                 {
