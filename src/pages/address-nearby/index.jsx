@@ -81,6 +81,13 @@ export default class AddressNearby extends React.Component {
     }
   }
 
+  handleRowClick = (val) => {
+    const { addressClick, history } = this.props
+    if (!addressClick) return
+    addressClick(val)
+    history.goBack()
+  }
+
   render() {
     const { list, loading } = this.state
 
@@ -105,7 +112,17 @@ export default class AddressNearby extends React.Component {
                   list.length ? (
                     <div className={styles.container}>
                       {
-                        list.map(v => <AddressRow data={v} key={v.id} />)
+                        list.map(v => (
+                          <AddressRow
+                            data={v}
+                            key={v.id}
+                            handleClick={() => this.handleRowClick({
+                              poi_type: 0,
+                              st_geohash: v.geohash,
+                              address: v.name,
+                              address_detail: v.address,
+                            })} />
+                        ))
                       }
                     </div>
                   ) : <NoData />

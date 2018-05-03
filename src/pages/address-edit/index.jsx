@@ -11,7 +11,7 @@ import config from 'utils/config'
 import NavBar from '../common-components/nav-bar'
 import AuthError from '../common-components/auth-err'
 import Loading from '../common-components/lazy-loading'
-import { delAddress } from '../../api'
+import { delAddress, upAddress, addAddress } from '../../api'
 import styles from './index.less'
 
 const AddressNearby = asyncLoad(() => import('../address-nearby'), <Loading />)
@@ -59,7 +59,7 @@ export default class AddressEdit extends React.Component {
     })
   }
 
-  submit = () => {
+  submit = async () => {
     const { info } = this.state
     if (!info.name) {
       return Toast.info('请输入姓名', 2)
@@ -70,10 +70,26 @@ export default class AddressEdit extends React.Component {
     if (!info.address || !info.address_detail) {
       return Toast.info('请输入位置,详细地址', 2)
     }
+    const ajaxFun = info.id ? upAddress : addAddress;
+    try {
+      Toast.loading('处理中...', 0)
+      const { data } = await ajaxFun(info)
+      Toast.hide()
+      if (data) {
+        this.props.history.goBack()
+      }
+    } catch ({ err }) {
+      Toast.err(err)
+    }
   }
 
-  handleAddressClick = () => {
-    console.log(123)
+  handleAddressClick = (obj) => {
+    this.setState({
+      info: {
+        ...this.state.info,
+        ...obj,
+      },
+    })
   }
 
   render() {
@@ -84,7 +100,7 @@ export default class AddressEdit extends React.Component {
       iconRight: '#delete',
       rightClick: this.handleDelete,
     } : {}
-    console.log(match)
+
     return !isLogin ? <AuthError /> : (
       <div className={styles.address}>
         <NavBar
@@ -130,7 +146,7 @@ export default class AddressEdit extends React.Component {
           <div className={styles.item} onClick={() => history.push(`${match.url}/address`)}>
             <div className={styles.label}>位置</div>
             <div className={styles.control}>
-              <input className={styles.input} placeholder="小区/写字楼/学校" maxLength={11} defaultValue={info.address} />
+              <input className={styles.input} placeholder="小区/写字楼/学校" maxLength={11} value={info.address} onChange={() => {}} />
             </div>
             <div className={styles.icon}>
               <SvgIcon name="#right" />
