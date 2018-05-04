@@ -91,6 +91,7 @@ export default class Scroll extends React.Component {
 
   constructor(props) {
     super(props)
+    this.pullDownInitTop = -50
     this.state = {
       beforePullDown: true,    // 显示bubble
       isRebounding: false,     // 数据获取完毕 是否开始向上回弹
@@ -98,11 +99,9 @@ export default class Scroll extends React.Component {
       pulling: false,          // 显示loading
       isPullUpLoad: false,     // 是否正在加载
       pullUpDirty: true,       // 显示footer中pullUpTxt true 显示加载更多 false 没有更多数据
-      pullDownStyle: '',       // 下拉后样式
       bubbleY: 0,              // bubble y值
-      pullDownStyle: props.pullDownRefresh ? { top: `${this.pullDownInitTop}px` } : {},
+      pullDownStyle: { top: `${this.pullDownInitTop}px` },
     }
-    this.pullDownInitTop = props.pullDownRefresh ? -50 : 0
   }
 
   componentDidMount() {

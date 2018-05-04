@@ -40,6 +40,7 @@ const login = asyncLoad(() => import('./login'), <Loading />)
 const shopDetail = asyncLoad(() => import('./shop-detail'), <Loading />)
 const address = asyncLoad(() => import('./address'), <Loading />)
 const addressEdit = asyncLoad(() => import('./address-edit'), <Loading />)
+const benefit = asyncLoad(() => import('./benefit'), <Loading />)
 
 export default () => (
   <React.Fragment>
@@ -53,6 +54,7 @@ export default () => (
       <Route path="/shop-detail" component={shopDetail} />
       <Route path="/address" component={address} />
       <Route path="/address-edit" component={addressEdit} />
+      <Route path="/benefit" component={benefit} />
     </Switch>
   </React.Fragment>
 )

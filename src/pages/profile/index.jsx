@@ -88,7 +88,7 @@ export default class Profile extends React.Component {
             }
             <p className={styles.desc}>钱包</p>
           </div>
-          <div className={styles.item}>
+          <div className={styles.item} onClick={() => changePage('/benefit')}>
             {
               getItemContent('#red-packet', styles.red, gift_amount, '个')
             }

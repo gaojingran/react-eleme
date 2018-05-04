@@ -49,5 +49,7 @@ export const delAddress = (params) => { return HttpUtils.get('/elm/del_address',
 export const upAddress = (params) => { return HttpUtils.post('/elm/update_address', params) }
 export const addAddress = (params) => { return HttpUtils.post('/elm/add_address', params) }
 
+export const getHongbaos = (params) => { return HttpUtils.get('/elm/hongbaos', params) }
+
 // 根据经纬度 关键词 获取地址
 export const getNearby = (params) => { return HttpUtils.get('/elm/search_nearby', params) }
