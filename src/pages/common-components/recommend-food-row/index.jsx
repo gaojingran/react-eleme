@@ -7,11 +7,11 @@ import styles from './index.less'
 
 export default class RecommedFoodRow extends React.PureComponent {
   render() {
-    const { data } = this.props
+    const { data, rowClick } = this.props
     const { food, restaurant } = data
     const foodUrl = getImageUrl(food.image_path)
     return (
-      <div className={styles.row}>
+      <div className={styles.row} onClick={rowClick}>
         <div className={styles.pic}>
           <img src={foodUrl} />
           <p className={styles.tip}><span>{food.reason}</span></p>

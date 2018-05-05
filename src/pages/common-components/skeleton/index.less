@@ -67,6 +67,43 @@
   }
 }
 
+.recommend {
+  display: inline-block;
+  border: 1px solid @border-color;
+  margin: 1vw;
+  width: 46vw;
+  background-color: @fill-body;
+  transform: translate3d(0,0,0);
+  .pic {
+    width: 100%;
+    height: 46vw;
+    background-color: @skeleton-color;
+  }
+  .desc {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 16px 8px 20px;
+    .placeholder {
+      width: 100%;
+      height: 20px;
+      background-image: linear-gradient(
+                          to right,
+                          @skeleton-color 8%,
+                          #eee 18%,
+                          @skeleton-color 33%
+                        );
+      margin: 10px 0;
+      animation: progress 3s linear infinite;
+    }
+    .placeholder:nth-child(2) {
+      width: 90%;
+    }
+    .placeholder:nth-child(3) {
+      width: 80%;
+    }
+  }
+}
+
 @keyframes progress{
   from { background-position: -400px 0 }
   to { background-position: 400px 0 }
