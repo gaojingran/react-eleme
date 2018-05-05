@@ -1,7 +1,6 @@
 
 
 import React from 'react'
-import ReactDom from 'react-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchOrderList } from 'stores/order'
@@ -26,13 +25,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 @connect(mapStateToProps, mapDispatchToProps)
 @withTabBar
 export default class Order extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      topBarHeight: 0,
-    }
-  }
-
   componentDidMount() {
     const { isLogin, init } = this.props
     if (isLogin && !init) {
@@ -43,14 +35,6 @@ export default class Order extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLogin && !nextProps.init) {
       this.props.fetchOrderList(true, false)
-    }
-  }
-
-  getTopBarHeight = (topBar) => {
-    if (topBar) {
-      this.setState({
-        topBarHeight: ReactDom.findDOMNode(topBar).clientHeight,
-      })
     }
   }
 
@@ -67,12 +51,10 @@ export default class Order extends React.PureComponent {
   }
 
   render() {
-    const { topBarHeight } = this.state
     const { orderList, isLogin, init } = this.props
     const scrollProps = {
       className: styles.scroll,
       dataSource: orderList,
-      style: { top: topBarHeight },
       pullDownRefresh: { stop: 40 },
       pullUpLoad: true,
       pullingDown: this.handlePullingDown,
@@ -83,7 +65,6 @@ export default class Order extends React.PureComponent {
       <div className={styles.order}>
         <NavBar
           className={styles.nav}
-          ref={this.getTopBarHeight}
           title="订单"
           iconLeft="#back"
           leftClick={() => this.props.history.goBack()} />

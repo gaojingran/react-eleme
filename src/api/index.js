@@ -39,6 +39,9 @@ export const getShopFood = (params) => { return HttpUtils.get('/elm/restaurant_m
 export const getRatingTags = (params) => { return HttpUtils.get('/elm/rating_tags', params) }
 export const getRatingScores = (params) => { return HttpUtils.get('/elm/rating_scores', params) }
 
+// 推荐食物
+export const getRecommendation = (params) => { return HttpUtils.get('/elm/recommendation', params) }
+
 // 登陆 用户信息
 export const mobileSendCode = (params) => { return HttpUtils.post('/elm/mobile_send_code', params) }
 export const loginByMobile = (params) => { return HttpUtils.post('/elm/login_by_mobile', params) }

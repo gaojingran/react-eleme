@@ -41,6 +41,7 @@ export default class Login extends React.Component {
       this.validate_token = data['validate_token']      // eslint-disable-line
 
       let count = 60
+      this.setState({ time: count })
       this.timer = setInterval(() => {
         if (count > 0) {
           count--

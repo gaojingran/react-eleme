@@ -96,7 +96,7 @@ export default class AddressEdit extends React.Component {
     const { isLogin, match, history } = this.props
     const { info = {} } = this.state
     const navText = info ? '编辑地址' : '更新地址'
-    const navProps = info ? {
+    const navProps = info.id ? {
       iconRight: '#delete',
       rightClick: this.handleDelete,
     } : {}

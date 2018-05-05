@@ -25,7 +25,7 @@ export default (Component) => {
               <SvgIcon className={cls(styles.icon, styles.scale)} name="#elem" />
               <h1 className={styles.text}>微淘</h1>
             </div>
-            <div className={itemCls('/compass')}>
+            <div className={itemCls('/compass')} onClick={() => handleClick('/compass')}>
               <SvgIcon className={styles.icon} name="#compass" />
               <h1 className={styles.text}>发现</h1>
             </div>
