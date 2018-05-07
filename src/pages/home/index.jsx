@@ -1,10 +1,12 @@
 
 import React from 'react'
 import ReactDom from 'react-dom'
+import queryString from 'query-string'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Slide from 'components/slide'
 import Scroll from 'components/scroll'
+import Toast from 'components/toast'
 import { homeUpdate, homeInit, homeList } from '../../stores/home'
 import withTabBar from '../common-components/tab-bar'
 import TitleBar from '../common-components/title-bar'
@@ -89,6 +91,23 @@ export default class Home extends React.Component {
     })
   }
 
+  iconClick = (val) => {
+    try {
+      const urlParams = queryString.parse(decodeURIComponent(val.link).split('?')[1])
+      const params = JSON.parse(urlParams.target)
+      this.props.history.push({
+        pathname: '/restaurant',
+        state: {
+          ...params,
+          entry_id: urlParams.entry_id,
+          target_name: urlParams.target_name,
+        },
+      })
+    } catch (err) {
+      Toast.info('Sorry,请点别的菜单😂', 2)
+    }
+  }
+
   render() {
     const { topBarHeight } = this.state
     const {
@@ -124,7 +143,7 @@ export default class Home extends React.Component {
               <div className={styles['entry-wrapper']}>
                 {
                   entry.slice(0, 10).map(v => (
-                    <div className={styles.item} key={v.id}>
+                    <div className={styles.item} key={v.id} onClick={() => this.iconClick(v)}>
                       <div className={styles.img}>
                         <img alt="" src={v.image_url} />
                       </div>

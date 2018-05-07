@@ -38,6 +38,7 @@ const order = asyncLoad(() => import('./order'), <Loading />)
 const compass = asyncLoad(() => import('./compass'), <Loading />)
 const profile = asyncLoad(() => import('./profile'), <Loading />)
 const login = asyncLoad(() => import('./login'), <Loading />)
+const restaurant = asyncLoad(() => import('./restaurant'), <Loading />)
 const shopDetail = asyncLoad(() => import('./shop-detail'), <Loading />)
 const address = asyncLoad(() => import('./address'), <Loading />)
 const addressEdit = asyncLoad(() => import('./address-edit'), <Loading />)
@@ -53,6 +54,7 @@ export default () => (
       <Route path="/compass" component={compass} />
       <Route path="/profile" component={profile} />
       <Route path="/login" component={login} />
+      <Route path="/restaurant" component={restaurant} />
       <Route path="/shop-detail" component={shopDetail} />
       <Route path="/address" component={address} />
       <Route path="/address-edit" component={addressEdit} />
