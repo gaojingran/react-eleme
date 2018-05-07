@@ -118,6 +118,13 @@ export default class Scroll extends React.Component {
         this.forceUpdate(true)
       }, nextProps.refreshDelay)
     }
+    if (nextProps.horizontalWidth !== this.props.horizontalWidth
+      && (nextProps.direction === DIRECTION_H || nextProps.freeScroll)) {
+        this.scrollContent.style.width = nextProps.horizontalWidth + 'px'
+        setTimeout(() => {
+          this.forceUpdate(true)
+        }, nextProps.refreshDelay)
+    }
   }
 
   initScroll = () => {
@@ -130,8 +137,7 @@ export default class Scroll extends React.Component {
       stopPropagation } = this.props;
     // 如果开启freeScroll设置宽度
     if (freeScroll || direction === DIRECTION_H) {
-      const width = horizontalWidth || this.wrapper.clientWidth
-      this.scrollContent.style.width = width + 'px'
+      this.scrollContent.style.width = horizontalWidth + 'px'
     }
     // 创建betterScroll
     this.bs = new BScroll(this.wrapper, {

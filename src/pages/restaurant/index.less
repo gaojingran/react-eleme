@@ -1,0 +1,129 @@
+
+@import '../../assets/css/theme.less';
+@import '../../assets/css/mixin.less';
+
+@factors-height: 80px;
+@filter-height: 80px;
+
+.restaurant {
+  position: fixed;
+  .position-full;
+  background-color: @fill-body;
+  z-index: 1;
+  .list {
+    position: fixed;
+    top: @bar-height + @factors-height + @filter-height;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.factors {
+  width: 100%;
+  height: @factors-height;
+  background-image: linear-gradient(-90deg, @primary-color, @primary-color-light);
+  display: flex;
+  .categories {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    .scroll {
+      box-sizing: border-box;
+      background-color: transparent;
+      padding-left: 30px;
+      .menu-wrapper {
+        height: @factors-height;
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        .menu {
+          box-sizing: border-box;
+          padding-right: 40px;
+          font-size: @font-size-medium;
+          font-weight: @font-weight-small;
+          color: #efefef;
+          position: relative;
+          &.active {
+            color: #fff;
+            font-weight: normal;
+            position: relative;
+            &:after {
+              position: absolute;
+              display: block;
+              content: '' !important;
+              left: 0;
+              right: 40px;
+              bottom: -10px;
+              height: 4px;
+              background-color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+  .icon {
+    flex: 0 0 80px;
+    width: 80px;
+    height: 100%;
+    display: flex;
+    .flex-center;
+    box-shadow: -1px 0 2px rgba(0,0,0,.05);
+    .more {
+      font-size: @font-size-large;
+      color: #fff;
+    }
+  }
+}
+
+.filter {
+  box-sizing: border-box;
+  width: 100%;
+  height: @filter-height;
+  background-color: @fill-body-darken;
+  border-bottom: 1px solid @border-color;
+  display: flex;
+  .item {
+    flex: 1;
+    width: 0;
+    display: flex;
+    .flex-center;
+    &:last-child {
+      flex: 0 0 150px;
+      width: 150px;
+    }
+    span {
+      font-size: @font-size-medium;
+      font-weight: @font-weight-small;
+      color: @color-title;
+      line-height: 32px;
+      .no-wrap;
+    }
+    .icon,.crown, .triangle {
+      font-size: @font-size-medium;
+      color: @color-base;
+      margin-left: 5px;
+    }
+    .triangle {
+      transform: scale(.6);
+      transform-origin: 0;
+      color: #999;
+    }
+    .crown  {
+      margin-left: 0;
+      margin-right: 5px;
+      color: #fec93c;
+    }
+
+    &.active {
+      span {
+        color: #000;
+        font-weight: @font-weight-medium;
+      }
+      .icon, .triangle {
+        color: #000;
+      }
+    }
+  }
+}

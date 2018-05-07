@@ -11,6 +11,7 @@ import { globalState } from './global'
 import { order } from './order'
 import { shop } from './shop'
 import { compass } from './compass'
+import { restaurant } from './restaurant'
 
 const store = createStore(
   combineReducers({
@@ -19,6 +20,7 @@ const store = createStore(
     order,
     shop,
     compass,
+    restaurant,
   }),
   applyMiddleware(thunk),
 )
