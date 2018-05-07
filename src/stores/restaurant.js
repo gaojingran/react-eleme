@@ -83,11 +83,13 @@ export const restaurantInit = (params) => {
         }),
         getTotalCategory({ ...location }),
       ])
+      const categorys = category.data.filter(v => v.id)
       dispatch(restaurantUpdate({
+        category: categorys,
+        sub_categories: categorys[0].sub_categories,
         loading: false,
         selectFactorsId: siftFactors.data.length ? siftFactors.data[0].id : undefined,
         siftFactors: siftFactors.data,
-        category: category.data,
         rank_id: shopList.data.rank_id,
         shopList: shopList.data.items,
         restaurant_category_ids: params.restaurant_category_id,

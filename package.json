@@ -72,6 +72,7 @@
     "numeral": "^2.0.6",
     "prop-types": "^15.6.1",
     "query-string": "^6.0.0",
+    "rc-queue-anim": "^1.5.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-redux": "^5.0.7",

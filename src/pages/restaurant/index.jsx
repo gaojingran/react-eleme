@@ -39,7 +39,7 @@ export default class Shop extends React.Component {
 
   render() {
     const { location, loading, shopList } = this.props
-    console.log(location.state, loading, shopList)
+
     const renderList = () => {
       if (loading && !shopList.length) {
         return <Loading style={{ marginTop: 20 }} />
