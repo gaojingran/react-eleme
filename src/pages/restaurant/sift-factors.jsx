@@ -7,7 +7,7 @@ import QueueAnim from 'rc-queue-anim'
 import Scroll from 'components/scroll'
 import SvgIcon from 'components/icon-svg'
 import { getImageUrl } from 'utils/utils'
-import { restaurantUpdate } from '../../stores/restaurant'
+import { restaurantUpdate, fetchShopList } from '../../stores/restaurant'
 import styles from './index.less'
 
 @connect(({ restaurant }) => ({
@@ -18,12 +18,13 @@ import styles from './index.less'
   sub_categories: restaurant.sub_categories,
 }), dispatch => bindActionCreators({
   restaurantUpdate,
+  fetchShopList,
 }, dispatch))
 export default class SiftFactors extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      horizontalWidth: 1000,
+      horizontalWidth: 0,
       showCategories: false,
 
       subCategories: [],
@@ -33,10 +34,9 @@ export default class SiftFactors extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectFactorsId !== this.state.selectMenuId) {
+    if (nextProps.selectFactorsId !== this.props.selectFactorsId) {
       this.setState({
         subCategories: nextProps.sub_categories,
-        selectMenuId: nextProps.selectFactorsId,
         restaurant_category_ids: nextProps.restaurant_category_ids,
       })
     }
@@ -69,6 +69,25 @@ export default class SiftFactors extends React.PureComponent {
     })
   }
 
+  subItemClick = (id) => {
+    this.props.fetchShopList({
+      sub_categories: this.state.subCategories,
+      siftFactors: this.state.subCategories,
+      selectFactorsId: id,
+      restaurant_category_ids: [id],
+    })
+    this.setState({
+      showCategories: false,
+    })
+  }
+
+  siftFactorClick = (val) => {
+    this.props.fetchShopList({
+      selectFactorsId: val.id,
+      restaurant_category_ids: val.restaurant_category_ids || [val.id],
+    })
+  }
+
   render() {
     const {
       horizontalWidth,
@@ -85,7 +104,7 @@ export default class SiftFactors extends React.PureComponent {
     const menuStyle = id => cls([styles.menu, id === selectFactorsId ? styles.active : null])
 
     const menuModalItemStyle = (id, compareArr, compareId) => {
-      if (restaurant_category_ids.length > 0) {
+      if (restaurant_category_ids.length > 1) {
         const cid = compareArr[0].id
         return cls(styles.item, cid === id ? styles.active : null)
       }
@@ -104,6 +123,7 @@ export default class SiftFactors extends React.PureComponent {
                 siftFactors.map(v => (
                   <div
                     key={v.id}
+                    onClick={() => this.siftFactorClick(v)}
                     className={menuStyle(v.id)}>
                     {v.name}
                   </div>
@@ -150,6 +170,7 @@ export default class SiftFactors extends React.PureComponent {
                         subCategories.map(v => (
                           <div
                             key={v.id}
+                            onClick={() => this.subItemClick(v.id)}
                             className={menuModalItemStyle(
                               v.id,
                               subCategories,

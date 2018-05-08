@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Loading from 'components/loading'
 import Scroll from 'components/scroll'
-import { restaurantDestroy, restaurantInit } from '../../stores/restaurant'
+import { restaurantDestroy, restaurantInit, fetchShopList } from '../../stores/restaurant'
 import ShopListRow from '../common-components/shop-list-row'
 import NavBar from '../common-components/nav-bar'
 import NoData from '../common-components/no-data'
@@ -13,13 +13,15 @@ import SiftFactors from './sift-factors'
 import FilterBar from './filter'
 import styles from './index.less'
 
-const mapStateToProp = ({ restaurant }) => ({
+const mapStateToProp = ({ restaurant, home }) => ({
   loading: restaurant.loading,
   shopList: restaurant.shopList,
+  locationInfo: home.locationInfo,
 })
 const mapDispatchToProps = dispatch => bindActionCreators({
   restaurantInit,
   restaurantDestroy,
+  fetchShopList,
 }, dispatch)
 
 @connect(mapStateToProp, mapDispatchToProps)
@@ -37,6 +39,16 @@ export default class Shop extends React.Component {
     this.scroll && this.scroll.refresh()    // eslint-disable-line
   }
 
+  handleRowClick = (val) => {
+    const { history, locationInfo } = this.props
+    const { id } = val
+    const { latitude, longitude } = locationInfo
+    history.push({
+      pathname: '/shop-detail',
+      search: `?restaurant_id=${id}&latitude=${latitude}&longitude=${longitude}`,
+    })
+  }
+
   render() {
     const { location, loading, shopList } = this.props
 
@@ -45,10 +57,18 @@ export default class Shop extends React.Component {
         return <Loading style={{ marginTop: 20 }} />
       }
       return (
-        <Scroll dataSource={shopList} ref={c => this.scroll = c}>
+        <Scroll
+          dataSource={shopList}
+          pullUpLoad={true}
+          pullingUp={() => this.props.fetchShopList({}, true)}
+          ref={c => this.scroll = c}>
           {
             shopList.length ? shopList.map((v, i) => (
-              <ShopListRow key={i} refresh={this.refreshScroll} data={v} />
+              <ShopListRow
+                key={i}
+                refresh={this.refreshScroll}
+                data={v}
+                handleClick={() => this.handleRowClick(v)} />
             )) : <NoData />
           }
         </Scroll>
