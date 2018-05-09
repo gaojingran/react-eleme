@@ -30,6 +30,9 @@ export const getGeolocation = () => {
 export const getEntry = (params) => { return HttpUtils.get('/elm/entry', params) }
 export const getBanner = (params) => { return HttpUtils.get('/elm/banner', params) }
 export const getShopList = (params) => { return HttpUtils.get('/elm/restaurants', params) }
+// 通过关键字搜索商家
+export const getShopListByKw = (params) => { return HttpUtils.get('/elm/restaurants_search', params) }
+
 export const getOrderList = (params) => { return HttpUtils.get('/elm/orders', params) }
 
 // 商店
@@ -43,6 +46,8 @@ export const getTotalCategory = (params) => { return HttpUtils.get('/elm/total_c
 export const getFoodSiftFactors = (params) => { return HttpUtils.get('/elm/food_sift_factors', params) }
 export const getFilterAttr = (params) => { return HttpUtils.get('/elm/filter_attributes', params) }
 
+// 热门关键词
+export const getHotKeywords = (params) => { return HttpUtils.get('/elm/hot_keywords', params) }
 // 推荐食物
 export const getRecommendation = (params) => { return HttpUtils.get('/elm/recommendation', params) }
 

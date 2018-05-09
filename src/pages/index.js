@@ -43,6 +43,7 @@ const shopDetail = asyncLoad(() => import('./shop-detail'), <Loading />)
 const address = asyncLoad(() => import('./address'), <Loading />)
 const addressEdit = asyncLoad(() => import('./address-edit'), <Loading />)
 const searchAddress = asyncLoad(() => import('./address-nearby'), <Loading />)
+const searchShop = asyncLoad(() => import('./search-shop'), <Loading />)
 const benefit = asyncLoad(() => import('./benefit'), <Loading />)
 
 export default () => (
@@ -52,6 +53,7 @@ export default () => (
       <Route exact path="/" render={() => <Redirect to="/home" />} />
       <Route path="/home" component={home} />
       <Route path="/search-address" component={searchAddress} />
+      <Route path="/search-shop" component={searchShop} />
       <Route path="/order" component={order} />
       <Route path="/compass" component={compass} />
       <Route path="/profile" component={profile} />
