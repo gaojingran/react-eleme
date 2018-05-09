@@ -48,7 +48,7 @@ export const homeInit = () => {
       }
       const location = { ...omit(locationInfo, ['address']) }
       // 获取banner entry
-      const [banner, entry, shoplist] = await Promise.all([
+      const [banner, entry, list] = await Promise.all([
         getBanner(location),
         getEntry(location),
         getShopList({
@@ -64,8 +64,8 @@ export const homeInit = () => {
       dispatch(homeUpdate({
         banner: banner.data,
         entry: entry.data,
-        shoplist: shoplist.data.items,
-        rank_id: shoplist.data.meta.rank_id,
+        shoplist: list.data.items,
+        rank_id: list.data.meta.rank_id,
         init: true,
       }))
     } catch ({ err }) {

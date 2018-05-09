@@ -82,9 +82,20 @@ export default class AddressNearby extends React.Component {
   }
 
   handleRowClick = (val) => {
+    // addressClick 外部传入的handler
     const { addressClick, history } = this.props
-    if (!addressClick) return
-    addressClick(val)
+    if (!addressClick) {
+      this.props.homeUpdate({
+        init: false,
+        locationInfo: {
+          address: val.address,
+          latitude: val.latitude,
+          longitude: val.longitude,
+        },
+      })
+    } else {
+      addressClick(val)
+    }
     history.goBack()
   }
 
@@ -121,6 +132,8 @@ export default class AddressNearby extends React.Component {
                               st_geohash: v.geohash,
                               address: v.name,
                               address_detail: v.address,
+                              latitude: v.latitude,
+                              longitude: v.longitude,
                             })} />
                         ))
                       }

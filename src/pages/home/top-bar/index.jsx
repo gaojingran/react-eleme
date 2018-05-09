@@ -3,6 +3,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 import cls from 'classnames'
 import SvgIcon from 'components/icon-svg'
 import { homeUpdate } from '../../../stores/home'
@@ -15,9 +16,10 @@ const mapStateToProps = ({ home }) => ({
 const mapActionsToProps = dispatch => bindActionCreators({ homeUpdate }, dispatch)
 
 @connect(mapStateToProps, mapActionsToProps)
+@withRouter
 export default class TopBar extends React.PureComponent {
   render() {
-    const { topBarShrink } = this.props
+    const { topBarShrink, history } = this.props
     const { address } = this.props.locationInfo
     const clsname = cls({
       [styles.header]: true,
@@ -25,7 +27,7 @@ export default class TopBar extends React.PureComponent {
     })
     return (
       <div className={clsname}>
-        <div className={styles.location}>
+        <div className={styles.location} onClick={() => history.push('/search-address')}>
           <SvgIcon className={styles.icon} name="#location" />
           <h1 className={styles.address}>{address ? address : '正在识别地址...'}</h1>
           <SvgIcon className={styles.down} name="#triangle_down_fill" />
