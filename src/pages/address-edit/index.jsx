@@ -79,7 +79,7 @@ export default class AddressEdit extends React.Component {
         this.props.history.goBack()
       }
     } catch ({ err }) {
-      Toast.err(err)
+      Toast.info(err)
     }
   }
 
