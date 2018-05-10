@@ -50,8 +50,19 @@ export default class Order extends React.PureComponent {
     })
   }
 
+  rowClick = (id) => {
+    this.props.history.push({
+      pathname: '/order-detail',
+      state: { id },
+    })
+  }
+
   render() {
-    const { orderList, isLogin, init } = this.props
+    const {
+      orderList,
+      isLogin,
+      init,
+    } = this.props
     const scrollProps = {
       className: styles.scroll,
       dataSource: orderList,
@@ -73,7 +84,7 @@ export default class Order extends React.PureComponent {
             <Scroll {...scrollProps} ref={c => this.scroll = c}>
               {
                 init ? orderList.map(v => (
-                  <OrderRow key={v.id} data={v} />
+                  <OrderRow key={v.id} data={v} handleClick={() => this.rowClick(v.unique_id)} />
                 )) : Array.from({ length: 10 }, (v, i) => i).map(v => (
                   <RowSk key={v} style={{ backgroundColor: '#fff', marginBottom: 10 }} />
                 ))

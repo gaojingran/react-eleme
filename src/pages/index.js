@@ -35,6 +35,7 @@ class AuthComponent extends React.Component {
 
 const home = asyncLoad(() => import('./home'), <Loading />)
 const order = asyncLoad(() => import('./order'), <Loading />)
+const orderDetail = asyncLoad(() => import('./order-detail'), <Loading />)
 const compass = asyncLoad(() => import('./compass'), <Loading />)
 const profile = asyncLoad(() => import('./profile'), <Loading />)
 const login = asyncLoad(() => import('./login'), <Loading />)
@@ -55,6 +56,7 @@ export default () => (
       <Route path="/search-address" component={searchAddress} />
       <Route path="/search-shop" component={searchShop} />
       <Route path="/order" component={order} />
+      <Route path="/order-detail" component={orderDetail} />
       <Route path="/compass" component={compass} />
       <Route path="/profile" component={profile} />
       <Route path="/login" component={login} />

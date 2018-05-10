@@ -34,6 +34,8 @@ export const getShopList = (params) => { return HttpUtils.get('/elm/restaurants'
 export const getShopListByKw = (params) => { return HttpUtils.get('/elm/restaurants_search', params) }
 
 export const getOrderList = (params) => { return HttpUtils.get('/elm/orders', params) }
+export const getOrderSnapshot = (params) => { return HttpUtils.get('/elm/order-snapshot', params) }
+export const getOrderDesc = (params) => { return HttpUtils.get('/elm/order-desc', params) }
 
 // 商店
 export const getShopInfo = (params) => { return HttpUtils.get('/elm/restaurant_byid', params) }

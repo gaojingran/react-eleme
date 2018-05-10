@@ -7,10 +7,10 @@ import styles from './index.less'
 
 export default class OrderRow extends React.PureComponent {
   render() {
-    const { data } = this.props
+    const { data, handleClick } = this.props
 
     return (
-      <div className={styles['order-row']}>
+      <div className={styles['order-row']} onClick={handleClick}>
         <div className={styles['order-body']}>
           <div className={styles['shop-img']}>
             <img src={data.restaurant_image_path} />
