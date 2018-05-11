@@ -99,6 +99,65 @@
   }
 }
 
+.food-modal {
+  position: fixed;
+  .position-full;
+  z-index: 1;
+  &:after {
+    display: block;
+    content: '' !important;
+    position: fixed;
+    .position-full;
+    background-color: rgba(0,0,0,.5);
+    z-index: 1;
+  }
+  .body{
+    width: 600px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    transform: translate3d(-50%, -50%, 0);
+    .img {
+      width: 100%;
+      display: block;
+    }
+    .content {
+      background-color: @fill-body;
+      box-sizing: border-box;
+      padding: 20px;
+      border-radius: 0 0 6px 6px;
+      box-shadow: 0 3px 6px rgba(0,0,0,.3);
+      .name {
+        .no-wrap;
+        font-size: @font-size-medium;
+        color: @color-title;
+        line-height: 34px;
+        margin-bottom: 6px;
+      }
+      .description {
+        font-size: @font-size-small;
+        font-weight: @font-weight-small;
+        transform: scale(.8);
+        transform-origin: 0;
+        color: @color-base;
+        line-height: 32px;
+      }
+      .info {
+        font-size: 0;
+        span {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: @font-size-small;
+          font-weight: @font-weight-small;
+          color: @color-base;
+          transform: scale(.9);
+          margin: 4px 8px 4px -6px;
+        }
+      }
+    }
+  }
+}
 
 
 .food-menu {

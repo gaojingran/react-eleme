@@ -9,8 +9,10 @@ import { getImageUrl } from 'utils/utils'
 import avatar from 'assets/img/avatar.svg'
 import Rate from 'components/rate'
 import Scroll from 'components/scroll'
+import Gallery from '../../common-components/gallery'
 import { changeRatingTag } from '../../../stores/shop'
 import styles from './index.less'
+
 
 @connect(({ shop }) => ({
   info: shop.info,
@@ -22,6 +24,11 @@ import styles from './index.less'
   changeRatingTag,
 }, dispatch))
 export default class Ratings extends React.PureComponent {
+  state = {
+    photo: [],
+    photoVisible: false,
+  }
+
   componentWillReceiveProps(nextProp) {
     if (nextProp.ratings !== this.props.ratings) {
       this.scroll && this.scroll.refresh() // eslint-disable-line
@@ -44,6 +51,24 @@ export default class Ratings extends React.PureComponent {
     }, 60)
   }
 
+  galleryCancel = () => {
+    this.setState({
+      photoVisible: false,
+    })
+  }
+
+  imgClick = (val) => {
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
+    this.timer = setTimeout(() => {
+      this.setState({
+        photo: [val],
+        photoVisible: true,
+      })
+    }, 60)
+  }
+
   render() {
     const {
       show,
@@ -53,6 +78,8 @@ export default class Ratings extends React.PureComponent {
       scores,
       tagIndex,
     } = this.props
+
+    const { photo, photoVisible } = this.state
 
     const compare_rating = numeral(scores.compare_rating * 100 || 0).format('0.00')
     const service_score = numeral(scores.service_score || 0).format('0.0')
@@ -136,7 +163,10 @@ export default class Ratings extends React.PureComponent {
                       <div className={styles['order-img']}>
                         {
                           v.order_images.map((img, i) => (
-                            <div key={i} className={styles.img}>
+                            <div
+                              key={i}
+                              className={styles.img}
+                              onClick={() => this.imgClick(getImageUrl(img.image_hash))}>
                               <img src={getImageUrl(img.image_hash)} />
                             </div>
                           ))
@@ -149,6 +179,11 @@ export default class Ratings extends React.PureComponent {
             ))
           }
         </Scroll>
+
+        <Gallery
+          visible={photoVisible}
+          photos={photo}
+          handleCancel={this.galleryCancel} />
       </div>
     )
   }

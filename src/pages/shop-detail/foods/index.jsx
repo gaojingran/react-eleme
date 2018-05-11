@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getImageUrl } from 'utils/utils'
 import Scroll from 'components/scroll'
+import Modal from 'components/modal'
 import Menu from './menu'
 import { shopUpdate } from '../../../stores/shop'
 import styles from './index.less'
@@ -17,6 +18,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Foods extends React.PureComponent {
+  state = {
+    foodVisible: false,
+    foodInfo: {},
+  }
+
   componentWillUnmount() {
     if (this.timer) {
       clearTimeout(this.timer)
@@ -61,8 +67,26 @@ export default class Foods extends React.PureComponent {
     }, 300)
   }
 
+  foodClick = (f) => {
+    this.timer && clearTimeout(this.timer) // eslint-disable-line
+    this.timer = setTimeout(() => {
+      this.setState({
+        foodVisible: true,
+        foodInfo: f,
+      })
+    }, 60)
+  }
+
+  foodModalCancel = () => {
+    this.setState({
+      foodVisible: false,
+      foodInfo: {},
+    })
+  }
+
   render() {
     const { menu, show } = this.props
+    const { foodVisible, foodInfo } = this.state
     const scrollWrapProps = {
       dataSource: menu,
       probeType: 3,
@@ -90,7 +114,7 @@ export default class Foods extends React.PureComponent {
                       {
                         v.foods.map(f => (
                           <li key={f.item_id} className={styles.item}>
-                            <div className={styles.img}>
+                            <div className={styles.img} onClick={() => this.foodClick(f)}>
                               <img src={getImageUrl(f.image_path)} />
                             </div>
                             <div className={styles.content}>
@@ -111,6 +135,22 @@ export default class Foods extends React.PureComponent {
             </div>
           </Scroll>
         </div>
+
+        <Modal visible={foodVisible}>
+          <div className={styles['food-modal']} key="food" onClick={this.foodModalCancel}>
+            <div className={styles.body}>
+              <img src={getImageUrl(foodInfo.image_path)} className={styles.img} />
+              <div className={styles.content}>
+                <h1 className={styles.name}>{foodInfo.name}</h1>
+                <p className={styles.description}>{foodInfo.description}</p>
+                <p className={styles.info}>
+                  <span>月售{foodInfo.month_sales}份</span>
+                  <span>好评率{foodInfo.satisfy_rate}%</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </Modal>
       </div>
     )
   }
