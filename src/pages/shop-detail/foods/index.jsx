@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import { getImageUrl } from 'utils/utils'
 import Scroll from 'components/scroll'
 import Modal from 'components/modal'
+import SvgIcon from 'components/icon-svg'
 import Menu from './menu'
 import { shopUpdate } from '../../../stores/shop'
 import styles from './index.less'
@@ -19,7 +20,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Foods extends React.PureComponent {
   state = {
-    foodVisible: false,
+    foodVisible: false, // 商品详情
+    specsVisible: false, // 选规格
     foodInfo: {},
   }
 
@@ -28,6 +30,14 @@ export default class Foods extends React.PureComponent {
       clearTimeout(this.timer)
       this.timer = null
     }
+  }
+
+  getFoodPrice = (foods = []) => {
+    const defaultFood = foods.find(v => v.food_id < 0)
+    if (foods.length > 0 && defaultFood) {
+      return `¥${defaultFood.price}起`
+    }
+    return `¥${foods[0].price}`
   }
 
   foodWrapperRender = (foodWrapper) => {
@@ -77,23 +87,31 @@ export default class Foods extends React.PureComponent {
     }, 60)
   }
 
-  foodModalCancel = () => {
+  modalCancel = () => {
     this.setState({
       foodVisible: false,
+      specsVisible: false,
       foodInfo: {},
+    })
+  }
+
+  chooseSpecs = (food) => {
+    this.setState({
+      specsVisible: true,
+      foodInfo: food,
     })
   }
 
   render() {
     const { menu, show } = this.props
-    const { foodVisible, foodInfo } = this.state
+    const { foodVisible, foodInfo, specsVisible } = this.state
     const scrollWrapProps = {
       dataSource: menu,
       probeType: 3,
       listenScroll: true,
       scroll: pos => this.handleScroll(pos),
     }
-
+    console.log(menu, specsVisible, foodInfo)
     return (
       <div className={styles['food-wrapper']} style={{ display: show ? 'flex' : 'none' }}>
         <div className={styles.menu}>
@@ -124,6 +142,20 @@ export default class Foods extends React.PureComponent {
                                 <span>月售{f.month_sales}份</span>
                                 <span>好评率{f.satisfy_rate}%</span>
                               </p>
+                              <p className={styles['sales-info']}>
+                                <span className={styles.price}>
+                                  {this.getFoodPrice(f.specfoods)}
+                                </span>
+                                {
+                                  f.attrs.length ? (
+                                    <button
+                                      className={styles.specs}
+                                      onClick={() => this.chooseSpecs(f)}>
+                                      选规格
+                                    </button>
+                                  ) : null
+                                }
+                              </p>
                             </div>
                           </li>
                         ))
@@ -137,7 +169,7 @@ export default class Foods extends React.PureComponent {
         </div>
 
         <Modal visible={foodVisible}>
-          <div className={styles['food-modal']} key="food" onClick={this.foodModalCancel}>
+          <div className={styles['food-modal']} key="food" onClick={this.modalCancel}>
             <div className={styles.body}>
               <img src={getImageUrl(foodInfo.image_path)} className={styles.img} />
               <div className={styles.content}>
@@ -149,6 +181,46 @@ export default class Foods extends React.PureComponent {
                 </p>
               </div>
             </div>
+          </div>
+        </Modal>
+
+        <Modal visible={specsVisible}>
+          <div className={styles['specs-modal']} key="specs">
+            <div className={styles.body}>
+              <h1 className={styles.title}>{foodInfo.name}</h1>
+              <SvgIcon name="#close" className={styles.close} onClick={this.modalCancel} />
+              {
+                foodInfo.specfoods && foodInfo.specfoods.length ? (
+                  <div className={styles.container}>
+                    <h1 className={styles.title}>规格</h1>
+                    <div className={styles.wrapper}>
+                      {
+                        foodInfo.specfoods.map(v => (
+                          <div key={v.food_id} className={styles.item}>{v.specs[0].value}</div>
+                        ))
+                      }
+                    </div>
+                  </div>
+                ) : null
+              }
+              {
+                foodInfo.attrs && foodInfo.attrs.length ? (
+                  foodInfo.attrs.map((v, i) => (
+                    <div className={styles.container} key={i}>
+                      <h1 className={styles.title}>{v.name}</h1>
+                      <div className={styles.wrapper}>
+                        {
+                          v.values.map((specs, ids) => (
+                            <div key={ids} className={styles.item}>{specs}</div>
+                          ))
+                        }
+                      </div>
+                    </div>
+                  ))
+                ) : null
+              }
+            </div>
+            <div className={styles.mask} onClick={this.modalCancel} />
           </div>
         </Modal>
       </div>

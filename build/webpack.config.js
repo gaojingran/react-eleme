@@ -3,7 +3,7 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const baseConfig = require('./webpack.config.base')
 
 const jsonStringify = v => JSON.stringify(v)
@@ -88,20 +88,19 @@ if (isDev) {
         {
           test: /.less$/,
           exclude: /node_modules/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              { loader: 'css-loader', options: { importLoaders: 1, minimize: true, module: true, } },
-              { loader: 'postcss-loader' },
-              { loader: 'less-loader' }
-            ]
-          })
+          use: [
+            MiniCssExtractPlugin.loader,
+            { loader: 'css-loader', options: { importLoaders: 1, minimize: true, module: true, } },
+            { loader: 'postcss-loader' },
+            { loader: 'less-loader' }
+          ],
         }
       ]
     },
     plugins: defaultPlugins.concat([
-      new ExtractTextPlugin({
-        filename: '[name].[chunkhash:8].css'
+      new MiniCssExtractPlugin({
+        filename: "[name].[chunkhash:8].css",
+        chunkFilename: "[id].css"
       }),
     ])
   })

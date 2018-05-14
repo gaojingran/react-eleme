@@ -4,10 +4,10 @@ import cls from 'classnames'
 import PropTypes from 'prop-types'
 import styles from './index.less'
 
-const SvgIcon = ({ name, className }) => {
+const SvgIcon = ({ name, className, onClick = () => {} }) => {
   const clsName = className ? cls(styles['icon-svg'], className) : styles['icon-svg'];
   return (
-    <svg className={clsName} aria-hidden="true">
+    <svg className={clsName} aria-hidden="true" onClick={onClick}>
       <use xlinkHref={name} />
     </svg>
   );
