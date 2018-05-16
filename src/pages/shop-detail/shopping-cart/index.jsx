@@ -138,7 +138,7 @@ export default class ShoppingCart extends React.PureComponent {
       const { activities } = info
       let notice = '暂无满减'
       let real_price = price
-      if (activities[0].type === 102) {
+      if (activities.length && activities[0].type === 102) {
         const discount = JSON.parse(activities[0].attribute)
         const keys = Object.keys(discount)
         // 寻找满减key
