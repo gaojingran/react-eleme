@@ -53,3 +53,18 @@ export const prefixStyle = (style) => {
   }
   return vendor + style.charAt(0).toUpperCase() + style.substr(1)
 }
+
+export const watchTransitionEvent = () => {
+  const transitions = {
+    transition: 'transitionend',
+    OTransition: 'oTransitionEnd',
+    MozTransition: 'transitionend',
+    WebkitTransition: 'webkitTransitionEnd',
+  };
+  for (let key in transitions) {
+    if (elementStyle[key] !== undefined) {
+      return transitions[key];
+    }
+  }
+  return false;
+};

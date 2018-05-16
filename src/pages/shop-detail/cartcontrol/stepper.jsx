@@ -6,6 +6,7 @@ import cls from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { shoppingCartUpdate } from 'stores/shopping-cart'
+import eventProxy from 'utils/event-proxy'
 import styles from './index.less'
 
 @connect(({ shoppingCart }) => ({
@@ -14,11 +15,11 @@ import styles from './index.less'
   shoppingCartUpdate,
 }, dispatch))
 export default class Stepper extends React.PureComponent {
-  increment = () => {
+  increment = ({ target }) => {
     const { food, cart } = this.props
-    const specs = food.specfoods[0]
+    const specs = food.specfoods ? food.specfoods[0] : null
     const isHas = cart.find(v => v.virtual_food_id === food.virtual_food_id)
-    if (!isHas) {
+    if (!isHas && specs) {
       this.props.shoppingCartUpdate({
         cart: [
           ...cart,
@@ -43,6 +44,8 @@ export default class Stepper extends React.PureComponent {
       })
       this.props.shoppingCartUpdate({ cart: result })
     }
+
+    eventProxy.trigger('cartBall', target)
   }
 
   decrement = () => {

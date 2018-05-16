@@ -18,6 +18,7 @@
     "react/no-find-dom-node": [0],
     "react/jsx-filename-extension": [0],
     "array-callback-return": [0],
+    "no-mixed-operators": [0],
     "no-nested-ternary": [0],
     "jsx-a11y/alt-text": [0],
     "jsx-a11y/anchor-is-valid": [0],
