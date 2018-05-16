@@ -64,13 +64,14 @@ export default class ShoppingCart extends React.PureComponent {
       left,
       top,
       position: 'fixed',
-      transition: 'all 20s cubic-bezier(0.49,-0.29,0.75,0.41)',
+      transition: 'all .6s cubic-bezier(0.49,-0.29,0.75,0.41)',
     }
     const innerStyle = {
       width: ballWidth,
       height: ballWidth,
       borderRadius: ballWidth,
       background: '#0af',
+      transition: 'all .6s linear',
     }
     const sRect = dom.getBoundingClientRect()
     const sx = (sRect.left + ballWidth / 2) - (cartIconRect.x + cartIconRect.width / 2)
@@ -112,7 +113,6 @@ export default class ShoppingCart extends React.PureComponent {
   render() {
     const { info, cart } = this.props
     const { modalVisible, balls } = this.state
-    console.log(balls)
     // 当前店中选中的食物
     const cartList = cart.filter(v => v.restaurant_id === info.id)
     // count数量
