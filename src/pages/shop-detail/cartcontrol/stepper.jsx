@@ -16,7 +16,7 @@ import styles from './index.less'
 }, dispatch))
 export default class Stepper extends React.PureComponent {
   increment = ({ target }) => {
-    const { food, cart } = this.props
+    const { food, cart, dropBall = true } = this.props
     const specs = food.specfoods ? food.specfoods[0] : null
     const isHas = cart.find(v => v.virtual_food_id === food.virtual_food_id)
     if (!isHas && specs) {
@@ -45,7 +45,7 @@ export default class Stepper extends React.PureComponent {
       this.props.shoppingCartUpdate({ cart: result })
     }
 
-    eventProxy.trigger('cartBall', target)
+    dropBall && eventProxy.trigger('cartBall', target) // eslint-disable-line
   }
 
   decrement = () => {

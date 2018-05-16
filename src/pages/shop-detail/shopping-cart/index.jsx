@@ -266,7 +266,7 @@ export default class ShoppingCart extends React.PureComponent {
                           </div>
                           <div className={styles.price}>¥ {v.price * v.quantity}</div>
                           <div className={styles.stepper}>
-                            <Stepper food={v} />
+                            <Stepper food={v} dropBall={false} />
                           </div>
                         </div>
                       ))
