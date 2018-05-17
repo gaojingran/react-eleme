@@ -55,6 +55,7 @@ export const getRecommendation = (params) => { return HttpUtils.get('/elm/recomm
 
 // 登陆 用户信息
 export const mobileSendCode = (params) => { return HttpUtils.post('/elm/mobile_send_code', params) }
+export const mobileCaptchas = (params) => { return HttpUtils.post('/elm/captchas', params) }
 export const loginByMobile = (params) => { return HttpUtils.post('/elm/login_by_mobile', params) }
 export const getUserInfo = (params) => { return HttpUtils.get('/elm/users', params) }
 

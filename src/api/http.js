@@ -15,7 +15,7 @@ export default class HttpUtil {
           const { result } = data
           resolve({ data: result })
         } else {
-          reject({ err: data.errmsg })
+          reject({ err: data.errmsg, name: data.name || '' })
         }
       }).catch((err) => {
         reject({ err: JSON.stringify(err) })
@@ -30,7 +30,7 @@ export default class HttpUtil {
           const { result } = data
           resolve({ data: result })
         } else {
-          reject({ err: data.errmsg })
+          reject({ err: data.errmsg, name: data.name || '' })
         }
       }).catch((err) => {
         reject({ err: JSON.stringify(err) })
