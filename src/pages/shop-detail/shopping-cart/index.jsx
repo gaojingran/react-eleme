@@ -2,6 +2,7 @@
 
 import React from 'react'
 import cls from 'classnames'
+import numeral from 'numeral'
 import QueueAnim from 'rc-queue-anim'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -157,8 +158,8 @@ export default class ShoppingCart extends React.PureComponent {
         }
       }
       return {
-        price,
-        real_price,
+        price: numeral(price).format('0.00'),
+        real_price: numeral(real_price).format('0.00'),
         notice,
       }
     })()
@@ -264,7 +265,7 @@ export default class ShoppingCart extends React.PureComponent {
                             <h1 className={styles.name}>{v.name}</h1>
                             <h3 className={styles.attr}>{v.attrs.map(a => a.value).join('-')}</h3>
                           </div>
-                          <div className={styles.price}>¥ {v.price * v.quantity}</div>
+                          <div className={styles.price}>¥ {numeral(v.price * v.quantity).format('0.00')}</div>
                           <div className={styles.stepper}>
                             <Stepper food={v} dropBall={false} />
                           </div>
